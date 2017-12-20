@@ -1,2 +1,4 @@
 # snakes
-Semester work from design pattern
+Semester Work from design pattern
+
+Game in JAVA
