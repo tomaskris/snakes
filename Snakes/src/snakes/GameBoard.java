@@ -16,11 +16,6 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JPanel;
 
-/**
- *
- * @author Fugiczek
- * @version 1.1
- */
 public class GameBoard extends JPanel implements Runnable {
 
     private static final long serialVersionUID = 7806414151208424260L;
@@ -36,6 +31,7 @@ public class GameBoard extends JPanel implements Runnable {
     /**
      * Instance tøídy Snake
      */
+//    private Snake snake;
     private Snake snake;
     /**
      * Instance tøídy Bonus
@@ -59,7 +55,7 @@ public class GameBoard extends JPanel implements Runnable {
      * Jak dlouho bìžel jeden cyklus, pomocná promìnná pøi synchronizaci FPS
      */
     private long cycleTime;
-    
+
     private ItemManager itemManager;
     private Generator generator;
     private AItem item;
@@ -87,19 +83,10 @@ public class GameBoard extends JPanel implements Runnable {
      * Nastavení hry a její zapnutí
      */
     private void gameInit() {
-//        ItemManager manager = new ItemManager();
-//        manager.registerItem(new Food("jablko", Color.green, ItemEffect.GROW));
-//        manager.registerItem(new Food("banan", Color.yellow, ItemEffect.GROW));
-//        manager.registerItem(new Food("jahoda", Color.red, ItemEffect.GROW));
-        
         inGame = true;
-        snake = new Snake(50, 50, 10, Color.GREEN, Color.GRAY);
-        
+        snake = new Snake(new Position(50, 50));
         itemManager.loadItems();
         item = itemManager.getRandomItem();
-//        generator.getRandCoordinate();
-//        bonus = new Bonus(10, Color.YELLOW, WIDTH, HEIGHT);
-//        bonus.locateBonus();
 
         Thread animace = new Thread(this, "Game");
         animace.start();
@@ -147,13 +134,11 @@ public class GameBoard extends JPanel implements Runnable {
      */
     private void updateGui() {
         Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
-
         g2.setColor(Color.BLACK); //vyèištìní
         g2.fillRect(0, 0, WIDTH, HEIGHT);
 
-        snake.draw(g2);
+        snake.draw(g2);//draw(g2);
         item.draw(g2);
-//        bonus.draw(g2);
 
         g2.dispose();
 
@@ -182,12 +167,12 @@ public class GameBoard extends JPanel implements Runnable {
     private void gameOver() {
         Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
 
-        String zprava = "Prohrál jsi!";
-        String skore = "Dosáhl jsi skóre: " + snake.getBody().size();
+        String zprava = "Prehral si!";
+        String skore = "Dosiahol si skóre: ";//+ snake.getBody().size();
         Font font = new Font("Helvetica", Font.BOLD, 20);
         FontMetrics metr = this.getFontMetrics(font);
 
-        g2.setColor(Color.BLACK); //vyèištìní
+        g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, WIDTH, HEIGHT);
 
         g2.setColor(Color.WHITE);
@@ -212,26 +197,24 @@ public class GameBoard extends JPanel implements Runnable {
 
     /**
      * Soukromá tøída která zpracovává zmáèknuté klávesy
-     *
-     * @author Fugiczek
-     * @version 1.1
      */
     private class TAdapter extends KeyAdapter {
 
+        @Override
         public void keyPressed(KeyEvent e) {
             //int hodnota zmáèknuté klávesy
             int key = e.getKeyCode();
-            if ((key == KeyEvent.VK_UP || key == KeyEvent.VK_W) && (snake.getDirect() != Direction.DOWN)) {
-                snake.setDirect(Direction.UP);
+            if ((key == KeyEvent.VK_UP || key == KeyEvent.VK_W) && (snake.getDirection() != Direction.DOWN)) {
+                snake.moveUp();
             }
-            if ((key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) && (snake.getDirect() != Direction.LEFT)) {
-                snake.setDirect(Direction.RIGHT);
+            if ((key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) && (snake.getDirection() != Direction.LEFT)) {
+                snake.turnRight();
             }
-            if ((key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) && (snake.getDirect() != Direction.UP)) {
-                snake.setDirect(Direction.DOWN);
+            if ((key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) && (snake.getDirection() != Direction.UP)) {
+                snake.moveDown();
             }
-            if ((key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) && (snake.getDirect() != Direction.RIGHT)) {
-                snake.setDirect(Direction.LEFT);
+            if ((key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) && (snake.getDirection() != Direction.RIGHT)) {
+                snake.turnLeft();
             }
         }
     }

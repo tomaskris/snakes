@@ -8,8 +8,6 @@ package snakes;
 /**
  * Tøída obsahuje metody na kontroly rùzných kolizí.
  *
- * @author Fugiczek
- * @version 1.1
  */
 public class Collisions {
 
@@ -28,22 +26,23 @@ public class Collisions {
      * mimo herní pole. Pokud se žádná z tìchto podmínek nepotvrdí, vrací false.
      */
     public static boolean checkCollision(Snake snake, int maxX, int maxY) {
-        for (GObject obj : snake.getBody()) {
-            if ((snake.getX() == obj.getX()) && (snake.getY() == obj.getY())) {
+        for (SnakeBody obj : snake.getBody()) {
+            if ((snake.getPosition().getX() == obj.getPosition().getX())
+                    && (snake.getPosition().getY() == obj.getPosition().getY())) {
                 return true;
             }
         }
 
-        if (snake.getX() < 0) {
+        if (snake.getPosition().getX() < 0) {
             return true;
         }
-        if (snake.getX() >= maxX) {
+        if (snake.getPosition().getX() >= maxX) {
             return true;
         }
-        if (snake.getY() < 0) {
+        if (snake.getPosition().getY() < 0) {
             return true;
         }
-        if (snake.getY() >= maxY) {
+        if (snake.getPosition().getY() >= maxY) {
             return true;
         }
 
@@ -59,7 +58,7 @@ public class Collisions {
      * false, když ne.
      */
     public static boolean checkBonus(Snake snake, AItem bonus) {
-        if (snake.getX() == bonus.getPosition().getX() && snake.getY() == bonus.getPosition().getY()) {
+        if (snake.getPosition().getX() == bonus.getPosition().getX() && snake.getPosition().getY() == bonus.getPosition().getY()) {
             return true;
         } else {
             return false;

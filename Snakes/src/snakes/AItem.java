@@ -5,51 +5,25 @@
  */
 package snakes;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import javax.swing.ImageIcon;
-import static snakes.Constants.SIZE_IN_PIXEL;
-
 /**
  *
  * @author Tomy
  */
-abstract class AItem implements Cloneable {
+abstract class AItem extends AObject implements Cloneable {
 
-    protected ImageIcon image;
     protected ItemType type;
-    protected Color color;
-    
-    private Position position;
     private Generator gen;
 
     public AItem() {
         this.gen = Generator.getInstance();
     }
 
-    public ImageIcon getImage() {
-        return image;
-    }
-
     public ItemType getType() {
         return type;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public Position getPosition() {
-        return position;
     }
     
     public void locateItem(){
         this.position = gen.getRandCoordinate();
-    }
-    
-    public void draw(Graphics2D g2) {
-        g2.setColor(color);
-        g2.fillRect(position.getX(), position.getY(), SIZE_IN_PIXEL, SIZE_IN_PIXEL);
     }
     
     //shallow copy (plytka kopia)
