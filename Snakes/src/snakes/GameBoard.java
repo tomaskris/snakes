@@ -57,7 +57,6 @@ public class GameBoard extends JPanel implements Runnable {
     private long cycleTime;
 
     private ItemManager itemManager;
-    private Generator generator;
     private AItem item;
 
     /**
@@ -74,7 +73,6 @@ public class GameBoard extends JPanel implements Runnable {
         HEIGHT = height;
         this.bs = bs;
         this.itemManager = new ItemManager();
-        this.generator = Generator.getInstance();
 
         gameInit();
     }

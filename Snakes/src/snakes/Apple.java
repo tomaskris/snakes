@@ -21,7 +21,9 @@ public class Apple extends AItem {
     }
 
     @Override
-    public AItem clone() throws CloneNotSupportedException{
-        return (Apple)super.clone();
+    protected AItem clone() {
+        return new Apple(getColor());
     }
+
+    
 }

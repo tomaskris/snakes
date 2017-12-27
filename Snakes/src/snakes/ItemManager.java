@@ -29,7 +29,7 @@ public class ItemManager {
     }
 
     private AItem getItemByID(int IDItem) {
-        return list.get(IDItem);
+        return list.get(IDItem).clone();
     }
 
     public AItem getRandomItem() {
@@ -39,14 +39,9 @@ public class ItemManager {
     }
 
     public void loadItems() {
-        AItem redApple = new Apple(Color.red);
-        registerItem(redApple);
-
-        AItem greenApple = new Apple(Color.green);
-        registerItem(greenApple);
-
-        AItem yellowApple = new Apple(Color.yellow);
-        registerItem(yellowApple);
+        registerItem(new Apple(Color.red));
+        registerItem(new Apple(Color.green));
+        registerItem(new Apple(Color.yellow));
         
         //toto prerobit, ze parameter bude pocet itemov
         //a bude cyklus, ktory bude nahodne vyrabat itemy roznych farieb?

@@ -9,7 +9,7 @@ package snakes;
  *
  * @author Tomy
  */
-abstract class AItem extends AObject implements Cloneable {
+abstract class AItem extends AObject {
 
     protected ItemType type;
     private Generator gen;
@@ -26,11 +26,13 @@ abstract class AItem extends AObject implements Cloneable {
         this.position = gen.getRandCoordinate();
     }
     
-    //shallow copy (plytka kopia)
+//    //shallow copy (plytka kopia)
+//    @Override
+//    public AItem clone() throws CloneNotSupportedException{
+//        return (AItem)super.clone();
+//    }
     @Override
-    public AItem clone() throws CloneNotSupportedException{
-        return (AItem)super.clone();
-    }
+    protected abstract AItem clone();
     
 //    @Override
 //    public Object clone() throws CloneNotSupportedException {
