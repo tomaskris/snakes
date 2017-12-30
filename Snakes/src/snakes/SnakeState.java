@@ -5,11 +5,12 @@
  */
 package snakes;
 
+import enums.Direction;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-import static snakes.Constants.SIZE_IN_PIXEL;
+import static constants.Constants.SIZE_IN_PIXEL;
 
 /**
  *

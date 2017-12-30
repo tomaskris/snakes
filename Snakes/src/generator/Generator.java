@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snakes;
+package generator;
 
+import java.util.List;
 import java.util.Random;
-import static snakes.Constants.MAX_HEIGHT_GAME_BOARD;
-import static snakes.Constants.MAX_WIDTH_GAME_BOARD;
-import static snakes.Constants.SIZE_IN_PIXEL;
+import snakes.Position;
+import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
+import static constants.Constants.MAX_WIDTH_GAME_BOARD;
+import static constants.Constants.SIZE_IN_PIXEL;
+import field.Field;
 
 /**
  *
@@ -20,23 +23,27 @@ public class Generator {
     private static Generator instance = new Generator();
 
     private Random randCoordinate;
-    private Random randItem;
+    private Random randEat;
     private Random randColor;
 
     private Generator() {
         Random randSeed = new Random();
         this.randCoordinate = new Random(randSeed.nextInt());
-        this.randItem = new Random(randSeed.nextInt());
+        this.randEat = new Random(randSeed.nextInt());
         this.randColor = new Random(randSeed.nextInt());
     }
 
     public Position getRandCoordinate() {
         int tmp, x, y;
         tmp = randCoordinate.nextInt(MAX_WIDTH_GAME_BOARD / SIZE_IN_PIXEL);
-        x = (tmp * SIZE_IN_PIXEL);
+        x = 10 + (tmp * SIZE_IN_PIXEL);
         tmp = randCoordinate.nextInt(MAX_HEIGHT_GAME_BOARD / SIZE_IN_PIXEL);
-        y = (tmp * SIZE_IN_PIXEL);
+        y = 30 + (tmp * SIZE_IN_PIXEL);
         return new Position(x, y);
+    }
+    
+    public Field getRandEat(List<Field> list) {
+        return list.get(randEat.nextInt(list.size()));
     }
 
     public static Generator getInstance() {

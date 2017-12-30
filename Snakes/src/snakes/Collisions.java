@@ -5,14 +5,20 @@
  */
 package snakes;
 
+import field.Field;
+import manager.FoodManager;
+import manager.Manager;
+
 /**
- * Tøída obsahuje metody na kontroly rùznıch kolizí.
+ * Trieda obsahuje metody na kontroly roznych kolizii.
  *
+ * @author Tomy
  */
+//SINGLETON
 public class Collisions {
 
     private Collisions() {
-    } //nepotøebujeme aby se vytváøeli instance, proto privátní konstruktor
+    }
 
     /**
      * Metoda zjišuje jestli had nezajel mimo hrací pole, nebo nenarazil sám do
@@ -33,16 +39,16 @@ public class Collisions {
             }
         }
 
-        if (snake.getPosition().getX() < 0) {
+        if (snake.getPosition().getX() < 10) {
             return true;
         }
-        if (snake.getPosition().getX() >= maxX) {
+        if (snake.getPosition().getX() >= maxX + 20) {
             return true;
         }
-        if (snake.getPosition().getY() < 0) {
+        if (snake.getPosition().getY() < 30) {
             return true;
         }
-        if (snake.getPosition().getY() >= maxY) {
+        if (snake.getPosition().getY() >= maxY + 40) {
             return true;
         }
 
@@ -50,19 +56,18 @@ public class Collisions {
     }
 
     /**
-     * Kontroluje zda had najel na bonus
+     * Kontroluje, ci had zjedol jedlo
      *
-     * @param snake Objekt hada
-     * @param bonus Objekt bonusu
-     * @return Vrací true, kdy se souøadnice hlavy hada a bonusu rovnají. Vrací
-     * false, kdy ne.
      */
-    public static boolean checkBonus(Snake snake, AItem bonus) {
-        if (snake.getPosition().getX() == bonus.getPosition().getX() && snake.getPosition().getY() == bonus.getPosition().getY()) {
-            return true;
-        } else {
-            return false;
+    public static boolean checkEatenFood(Snake snake, Manager manager) {
+        FoodManager man = (FoodManager)manager;
+        for (int i = 0; i < man.getDrawFoods().length; i++) {
+            if (snake.getPosition().getX() == man.getDrawFoods()[i].getPosition().getX() && snake.getPosition().getY() == man.getDrawFoods()[i].getPosition().getY()) {
+                man.getDrawFoods()[i] = null;
+                return true;
+            }
         }
+        return false;
     }
 
 }

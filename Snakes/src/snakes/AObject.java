@@ -8,7 +8,7 @@ package snakes;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
-import static snakes.Constants.SIZE_IN_PIXEL;
+import static constants.Constants.SIZE_IN_PIXEL;
 
 /**
  *

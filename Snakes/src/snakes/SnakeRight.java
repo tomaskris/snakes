@@ -5,8 +5,9 @@
  */
 package snakes;
 
+import enums.Direction;
 import java.util.List;
-import static snakes.Constants.SIZE_IN_PIXEL;
+import static constants.Constants.SIZE_IN_PIXEL;
 
 /**
  *

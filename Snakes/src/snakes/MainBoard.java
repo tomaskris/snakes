@@ -9,19 +9,14 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 /**
- * Tøída, která pøidává JPanel s hlavní èásti této hry a nastavuje základní
- * vlastnosti okna.
- *
- * @author Fugiczek
- * @version 1.1
+ * 
  */
 public class MainBoard extends JFrame {
 
-    private static final long serialVersionUID = 7959263521913348215L;
-
     public MainBoard(String title, int width, int height) {
         setTitle(title);
-        setSize(new Dimension(width + 3, height + 3));
+//        setSize(new Dimension(width + 3, height + 3));
+        setSize(new Dimension(width + 20, height + 40));
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

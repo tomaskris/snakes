@@ -5,6 +5,7 @@
  */
 package snakes;
 
+import enums.Direction;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -15,56 +16,28 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JPanel;
+import manager.FoodManager;
+import manager.Manager;
 
 public class GameBoard extends JPanel implements Runnable {
 
-    private static final long serialVersionUID = 7806414151208424260L;
-
-    /**
-     * Šíøka herního pole
-     */
-    private final int WIDTH;
-    /**
-     * Výška herního pole
-     */
-    private final int HEIGHT;
-    /**
-     * Instance tøídy Snake
-     */
-//    private Snake snake;
+    private final int WIDTH; //sirka herneho pola
+    private final int HEIGHT; //vyska herneho pola
     private Snake snake;
-    /**
-     * Instance tøídy Bonus
-     */
-//    private Bonus bonus;
-    /**
-     * Informace zda jsme ještì ve høe, nebo jsme prohráli
-     */
-    private boolean inGame;
-
-    /**
-     * instance tøídy BufferStrategy na vykreslování s metodou double-buffer
-     */
+    private boolean inGame; //bool hodnota ci sme este v hre alebo sme prehrali
+    
+    //BufferStrategy na vykreslovanie s metodou double-buffer
     private BufferStrategy bs;
-
-    /**
-     * FPS (1000/FRAME_DELAY), ovlivòuje rychlost hry
-     */
+    //FPS (1000/FRAME_DELAY), ovplyvnuje rychlost hry
     private final int FRAME_DELAY = 100;
-    /**
-     * Jak dlouho bìžel jeden cyklus, pomocná promìnná pøi synchronizaci FPS
-     */
+    //ako dlho bezal jeden cyklus, pomocna premenna pri synchronizacii FPS
     private long cycleTime;
 
-    private ItemManager itemManager;
-    private AItem item;
+//    private ItemManager itemManager;
+    private Manager foodManager;
+//    private AItem item;
+    private Graphics2D g2;
 
-    /**
-     *
-     * @param width šíøka herního pole
-     * @param height výška herního pole
-     * @param bs instance tøídy bufferstrategy na vykreslování
-     */
     public GameBoard(int width, int height, BufferStrategy bs) {
         addKeyListener(new TAdapter());
         setFocusable(true);
@@ -72,8 +45,10 @@ public class GameBoard extends JPanel implements Runnable {
         WIDTH = width;
         HEIGHT = height;
         this.bs = bs;
-        this.itemManager = new ItemManager();
+//        this.itemManager = new ItemManager();
 
+        this.g2 = (Graphics2D) bs.getDrawGraphics();
+        this.foodManager = new FoodManager(g2);
         gameInit();
     }
 
@@ -83,16 +58,17 @@ public class GameBoard extends JPanel implements Runnable {
     private void gameInit() {
         inGame = true;
         snake = new Snake(new Position(50, 50));
-        itemManager.loadItems();
-        item = itemManager.getRandomItem();
+//        itemManager.loadItems();
+//        item = itemManager.getRandomItem();
+        
 
         Thread animace = new Thread(this, "Game");
         animace.start();
     }
 
     /**
-     * Hlavní smyèka, kde probíhá furt dokola aktualizace herní logiky,
-     * pøekreslování a synchronizace FPS
+     * Hlavny cyklus, kde probieha furt dookola aktualizacia hernej logiky,
+     * prekreslovanie a synchronizacia FPS
      */
     @Override
     public void run() {
@@ -114,7 +90,7 @@ public class GameBoard extends JPanel implements Runnable {
     }
 
     /**
-     * Synchronizace FPS
+     * Synchronizacia FPS
      */
     private void synchFrameRate() {
         cycleTime += FRAME_DELAY;
@@ -128,15 +104,19 @@ public class GameBoard extends JPanel implements Runnable {
     }
 
     /**
-     * Vykreslení herní plochy
+     * Vykreslenie hernej plochy
      */
     private void updateGui() {
-        Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
+//        Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
+        
+        g2 = (Graphics2D) bs.getDrawGraphics();
+        foodManager.updateGraphics(g2);
         g2.setColor(Color.BLACK); //vyèištìní
-        g2.fillRect(0, 0, WIDTH, HEIGHT);
+        g2.fillRect(10, 30, WIDTH, HEIGHT);
 
         snake.draw(g2);//draw(g2);
-        item.draw(g2);
+//        item.draw(g2);
+        foodManager.draw();
 
         g2.dispose();
 
@@ -146,21 +126,22 @@ public class GameBoard extends JPanel implements Runnable {
     }
 
     /**
-     * Kontrola kolizí a posun hada
+     * Kontrola kolizii a posun hada
      */
     private void updateLogic() {
         if (Collisions.checkCollision(snake, WIDTH, HEIGHT)) {
             inGame = false;
-        } else if (Collisions.checkBonus(snake, item)) {
+//        } else if (Collisions.checkBonus(snake, item)) {
+        } else if (Collisions.checkEatenFood(snake, foodManager)) {
             snake.expandBody();
-            item = itemManager.getRandomItem();
+//            item = itemManager.getRandomItem();
         } else {
             snake.move();
         }
     }
 
     /**
-     * Zobrazení obrazovky s nápisem prohry a se skórem
+     * Zobrazenie obrazovky s napisom prehry a so skore
      */
     private void gameOver() {
         Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
@@ -171,7 +152,7 @@ public class GameBoard extends JPanel implements Runnable {
         FontMetrics metr = this.getFontMetrics(font);
 
         g2.setColor(Color.BLACK);
-        g2.fillRect(0, 0, WIDTH, HEIGHT);
+        g2.fillRect(10, 30, WIDTH, HEIGHT);
 
         g2.setColor(Color.WHITE);
         g2.setFont(font);
@@ -194,13 +175,13 @@ public class GameBoard extends JPanel implements Runnable {
     }
 
     /**
-     * Soukromá tøída která zpracovává zmáèknuté klávesy
+     * Sukromna trieda, ktera zpracovava stlacene klavesy
      */
     private class TAdapter extends KeyAdapter {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            //int hodnota zmáèknuté klávesy
+            //int hodnota stlacenej klavesy
             int key = e.getKeyCode();
             if ((key == KeyEvent.VK_UP || key == KeyEvent.VK_W) && (snake.getDirection() != Direction.DOWN)) {
                 snake.moveUp();

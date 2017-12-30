@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snakes;
+package applauncher;
 
 import javax.swing.SwingUtilities;
+import snakes.MainBoard;
 
 /**
  *
@@ -16,7 +17,7 @@ public class AppLauncher {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new MainBoard("Snakes", 300, 250);
+                new MainBoard("Snakes", 500, 500);
             }
         });
     }

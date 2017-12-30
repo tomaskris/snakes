@@ -3,12 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snakes;
+package enums;
 
-/**
- *
- * @author Tomy
- */
-public enum ItemType {
-    APPLE, BANANE;
+public enum Direction {
+    UP, DOWN, LEFT, RIGHT
 }
