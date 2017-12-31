@@ -3,37 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snakes;
+package snakestate;
 
 import enums.Direction;
 import java.util.List;
+import field.Position;
 import static constants.Constants.SIZE_IN_PIXEL;
 
 /**
  *
  * @author Tomy
  */
-public class SnakeDown extends SnakeState {
+public class SnakeRight extends SnakeState {
     
-    public SnakeDown(Position position, List<SnakeBody> body) {
+    public SnakeRight(Position position, List<SnakeBody> body) {
         super(position, body);
-        this.direction = Direction.DOWN;
+        this.direction = Direction.RIGHT;
     }
 
     @Override
-    public ISnakeState turnLeft() {
-        return new SnakeLeft(position, getBody());
+    public ISnakeState moveUp() {
+        return new SnakeUp(position, getBody());
     }
 
     @Override
-    public ISnakeState turnRight() {
-        return new SnakeRight(position, getBody());
+    public ISnakeState moveDown() {
+        return new SnakeDown(position, getBody());
     }
 
     @Override
     public void move() {
         moveBody();
-        setPosition(new Position(position.getX(), position.getY() + SIZE_IN_PIXEL));
+        setPosition(new Position(position.getX() + SIZE_IN_PIXEL, position.getY()));
     }
     
     @Override

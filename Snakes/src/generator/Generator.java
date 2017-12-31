@@ -7,7 +7,7 @@ package generator;
 
 import java.util.List;
 import java.util.Random;
-import snakes.Position;
+import field.Position;
 import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
 import static constants.Constants.MAX_WIDTH_GAME_BOARD;
 import static constants.Constants.SIZE_IN_PIXEL;

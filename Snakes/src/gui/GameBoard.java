@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snakes;
+package gui;
 
 import enums.Direction;
 import java.awt.Color;
@@ -18,6 +18,9 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JPanel;
 import manager.FoodManager;
 import manager.Manager;
+import field.Collisions;
+import field.Position;
+import snakes.Snake;
 
 public class GameBoard extends JPanel implements Runnable {
 
@@ -110,7 +113,6 @@ public class GameBoard extends JPanel implements Runnable {
 //        Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
         
         g2 = (Graphics2D) bs.getDrawGraphics();
-        foodManager.updateGraphics(g2);
         g2.setColor(Color.BLACK); //vyèištìní
         g2.fillRect(10, 30, WIDTH, HEIGHT);
 

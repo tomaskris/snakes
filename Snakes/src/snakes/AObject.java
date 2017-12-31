@@ -5,6 +5,7 @@
  */
 package snakes;
 
+import field.Position;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
@@ -14,7 +15,7 @@ import static constants.Constants.SIZE_IN_PIXEL;
  *
  * @author Tomy
  */
-abstract class AObject {
+public abstract class AObject {
     
     protected ImageIcon image;
     protected Color color;

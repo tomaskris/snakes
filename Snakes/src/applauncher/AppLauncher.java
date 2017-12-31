@@ -6,7 +6,7 @@
 package applauncher;
 
 import javax.swing.SwingUtilities;
-import snakes.MainBoard;
+import gui.MainBoard;
 
 /**
  *

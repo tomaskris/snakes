@@ -7,7 +7,6 @@ package field;
 
 import enums.TypeField;
 import javax.swing.ImageIcon;
-import snakes.Position;
 
 /**
  *

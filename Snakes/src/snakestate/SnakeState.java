@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snakes;
+package snakestate;
 
 import enums.Direction;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import field.Position;
 import static constants.Constants.SIZE_IN_PIXEL;
 
 /**

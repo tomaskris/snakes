@@ -5,6 +5,10 @@
  */
 package snakes;
 
+import field.Position;
+import snakestate.ISnakeState;
+import snakestate.SnakeDown;
+import snakestate.SnakeBody;
 import enums.Direction;
 import java.awt.Graphics2D;
 import java.util.ArrayList;

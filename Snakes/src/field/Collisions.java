@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snakes;
+package field;
 
+import snakestate.SnakeBody;
 import field.Field;
 import manager.FoodManager;
 import manager.Manager;
+import snakes.Snake;
 
 /**
  * Trieda obsahuje metody na kontroly roznych kolizii.

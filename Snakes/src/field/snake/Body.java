@@ -9,6 +9,6 @@ package field.snake;
  *
  * @author Tomy
  */
-public class Body {
+public class Body extends Snake {
     
 }
