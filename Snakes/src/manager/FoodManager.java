@@ -11,6 +11,7 @@ import java.util.List;
 import static constants.Constants.NUMBER_OF_FOODS;
 import field.Field;
 import field.food.*;
+import states.IFieldState;
 
 /**
  *
@@ -19,12 +20,12 @@ import field.food.*;
 public class FoodManager extends Manager {
 
     private List<Field> foods; //jedenie, z ktorych sa nahodne vybera
-    private Field[] drawFoods; //jedenie, ktore sa vykresluje na hraciu plochu
 
     public FoodManager(Graphics2D graphics) {
         super(graphics);
         this.foods = new ArrayList<>();
-        this.drawFoods = new Field[NUMBER_OF_FOODS];
+        //jedla, ktore sa vykresluju na plochu
+        this.drawField = new ArrayList<>(NUMBER_OF_FOODS);
         loadFoods();
     }
 
@@ -32,8 +33,8 @@ public class FoodManager extends Manager {
         foods.add(food);
     }
 
-    private Field randomFood() {
-        return getGenerator().getRandEat(foods);
+    private IFieldState randomFood() {
+        return getGenerator().getRandFood(foods);
     }
 
     private void loadFoods() {
@@ -49,26 +50,44 @@ public class FoodManager extends Manager {
         registerFood(new Strawberry());
 
         for (int i = 0; i < NUMBER_OF_FOODS; i++) {
-            drawFoods[i] = ((Food) randomFood()).copy();
-            drawFoods[i].changePosition(getGenerator().getRandCoordinate());
+            drawField.add(randomFood());
         }
-    }
-
-    public Field[] getDrawFoods() {
-        return drawFoods;
     }
 
     @Override
     public void draw() {
-        for (int i = 0; i < NUMBER_OF_FOODS; i++) {
-            if (drawFoods[i] == null) {
-                drawFoods[i] = ((Food) randomFood()).copy();
-                drawFoods[i].changePosition(getGenerator().getRandCoordinate());
-                getGraphics().drawImage(drawFoods[i].getIcon().getImage(), drawFoods[i].getPosition().getX(), drawFoods[i].getPosition().getY(), null);
+        for (IFieldState drawFood : drawField) {
+            if (drawFood == null) {
+                drawField.set(drawField.indexOf(drawFood), randomFood());
             } else {
-                getGraphics().drawImage(drawFoods[i].getIcon().getImage(), drawFoods[i].getPosition().getX(), drawFoods[i].getPosition().getY(), null);
+                drawFood.draw(getGraphics());
             }
         }
+    }
+
+    @Override
+    public void move() {
+        //jedlo sa bude pohybovat
+    }
+
+    @Override
+    public void moveUp() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void moveDown() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void turnLeft() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void turnRight() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package field.snake;
-
-import static constants.Constants.IMAGE_APPLE;
-import javax.swing.ImageIcon;
-import states.IFieldState;
+package enums;
 
 /**
  *
  * @author Tomy
  */
-public class Body extends Snake {
-    
-
-    
+public enum TypeKeyboard {
+    ARROWS, NUMBERS, ASDW, HJKU;
 }

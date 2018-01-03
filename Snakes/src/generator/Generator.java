@@ -12,6 +12,10 @@ import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
 import static constants.Constants.MAX_WIDTH_GAME_BOARD;
 import static constants.Constants.SIZE_IN_PIXEL;
 import field.Field;
+import field.food.Food;
+import field.snake.Snake;
+import states.FieldDown;
+import states.IFieldState;
 
 /**
  *
@@ -25,12 +29,16 @@ public class Generator {
     private Random randCoordinate;
     private Random randEat;
     private Random randColor;
+    private Random randStateSnake;
+    private Random randStateFood;
 
     private Generator() {
         Random randSeed = new Random();
         this.randCoordinate = new Random(randSeed.nextInt());
         this.randEat = new Random(randSeed.nextInt());
         this.randColor = new Random(randSeed.nextInt());
+        this.randStateSnake = new Random(randSeed.nextInt());
+        this.randStateFood = new Random(randSeed.nextInt());
     }
 
     public Position getRandCoordinate() {
@@ -41,9 +49,41 @@ public class Generator {
         y = 30 + (tmp * SIZE_IN_PIXEL);
         return new Position(x, y);
     }
+
+    public IFieldState getRandFood(List<Field> list) {
+        Food food = ((Food)list.get(randEat.nextInt(list.size()))).copy();
+        food.changePosition(getRandCoordinate());
+        return getRandStateFood(food);
+    }
     
-    public Field getRandEat(List<Field> list) {
-        return list.get(randEat.nextInt(list.size()));
+    public IFieldState getRandFood(Field food) {
+        return getRandStateFood(food);
+    }
+    
+    private IFieldState getRandStateFood(Field field){
+        return getRandState(randStateFood, field);
+    }
+    
+    public IFieldState getRandSnake() {
+        Snake head = new Snake();
+        head.changePosition(new Position(100, 100));
+        return getRandState(randStateSnake, head);
+    }
+    
+    private IFieldState getRandState(Random randStateFood, Field field){
+//        switch (randStateFood.nextInt(4)) {
+//            case 0:
+//                return new FieldDown(field);
+//            case 1:
+//                return new FieldUp(field);
+//            case 2:
+//                return new FieldLeft(field);
+//            case 3:
+//                return new FieldRight(field);
+//            default:
+//                return null;
+//        }
+        return new FieldDown(field);
     }
 
     public static Generator getInstance() {

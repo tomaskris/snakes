@@ -11,4 +11,10 @@ package field.snake;
  */
 public class Head extends Snake {
     
+    
+    
+    public Head() {
+//        this.icon = new ImageIcon(getClass().getResource(IMAGE_APPLE));
+    }
+    
 }

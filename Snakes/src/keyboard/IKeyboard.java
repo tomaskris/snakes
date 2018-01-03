@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package field.snake;
+package keyboard;
 
-import static constants.Constants.IMAGE_APPLE;
-import javax.swing.ImageIcon;
-import states.IFieldState;
+import manager.Manager;
 
 /**
  *
  * @author Tomy
  */
-public class Body extends Snake {
+public interface IKeyboard {
     
-
+    public boolean isKeyPressed(int key, Manager manager);
     
 }
