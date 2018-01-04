@@ -17,8 +17,7 @@ public class Player {
     private String name; //meno hraca
     private int score; //ziskane skore hraca
     private TypeSnake typeSnake; //typ hada
-//    private TypeKeyboard keyboard; //typ tlacitok na klavesnici, na ktorych hra
-    private IKeyboard keyboard;
+    private IKeyboard keyboard; //typ tlacitok na klavesnici, na ktorych hra
 
     public Player(String name, TypeSnake typeSnake, IKeyboard keyboard) {
         this.name = name;
@@ -42,7 +41,9 @@ public class Player {
     public TypeSnake getTypeSnake() {
         return typeSnake;
     }
-    
-    
+
+    public String getName() {
+        return name;
+    }
     
 }

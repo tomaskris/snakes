@@ -67,7 +67,7 @@ public class FoodManager extends Manager {
 
     @Override
     public void move() {
-        //jedlo sa bude pohybovat
+        //ak je jedlo pohybujuce sa, tak sa bude pohybovat
     }
 
     @Override

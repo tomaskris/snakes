@@ -5,7 +5,6 @@
  */
 package manager;
 
-import field.Field;
 import generator.Generator;
 import java.awt.Graphics2D;
 import java.util.List;

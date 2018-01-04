@@ -5,6 +5,6 @@
  */
 package enums;
 
-public enum Direction {
+public enum TypeDirection {
     UP, DOWN, LEFT, RIGHT
 }

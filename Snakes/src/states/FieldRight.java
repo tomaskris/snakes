@@ -6,7 +6,7 @@
 package states;
 
 import static constants.Constants.SIZE_IN_PIXEL;
-import enums.Direction;
+import enums.TypeDirection;
 import field.Field;
 import field.Position;
 
@@ -18,7 +18,7 @@ public class FieldRight extends FieldState {
     
     public FieldRight(Field field) {
         super(field);
-        this.direction = Direction.RIGHT;
+        this.direction = TypeDirection.RIGHT;
     }
     
     @Override

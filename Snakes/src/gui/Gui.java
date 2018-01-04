@@ -5,9 +5,7 @@
  */
 package gui;
 
-import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
 import static constants.Constants.MAX_HEIGHT_WINDOW;
-import static constants.Constants.MAX_WIDTH_GAME_BOARD;
 import static constants.Constants.MAX_WIDTH_WINDOW;
 import game_logic.GameManager;
 import java.awt.CardLayout;
@@ -20,21 +18,26 @@ import manager.SnakeManager;
  * @author Tomy
  */
 public class Gui extends javax.swing.JFrame {
-    
+
     private GameManager manager;
 
     public Gui() {
         initComponents();
         setLocationRelativeTo(null);
         createBufferStrategy(2);
-        this.manager = new GameManager(getBufferStrategy());
     }
 
     public void startGame() {
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.show(cards, "game_board");
         jplGameBoard.requestFocus(); //toto je dolezite
+        this.manager = new GameManager(getBufferStrategy());
         manager.createNewGame();
+    }
+    
+    private void backToStartPanel(){
+        CardLayout cl = (CardLayout) (cards.getLayout());
+        cl.show(cards, "start_panel");
     }
 
     /**
@@ -70,6 +73,11 @@ public class Gui extends javax.swing.JFrame {
         jbtAboutSnakes.setText("About Snakes");
 
         jbtExitSnakes.setText("Exit Snakes");
+        jbtExitSnakes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExitSnakesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jplStartPanelLayout = new javax.swing.GroupLayout(jplStartPanel);
         jplStartPanel.setLayout(jplStartPanelLayout);
@@ -133,10 +141,14 @@ public class Gui extends javax.swing.JFrame {
     private void jplGameBoardKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jplGameBoardKeyPressed
         System.out.println("Key pressed");
         int key = evt.getKeyCode();
-        for (Manager player : manager.getPlayers()) {
-            if(((SnakeManager)player).getKeyboard().isKeyPressed(key, player)){
-                break;
+        if (manager.isInGame()) {
+            for (Manager player : manager.getPlayers()) {
+                if (((SnakeManager) player).getKeyboard().isKeyPressed(key, player)) {
+                    break;
+                }
             }
+        } else {
+            backToStartPanel();
         }
     }//GEN-LAST:event_jplGameBoardKeyPressed
 
@@ -144,6 +156,10 @@ public class Gui extends javax.swing.JFrame {
         System.out.println("Start pressed");
         startGame();
     }//GEN-LAST:event_jbtStartGameActionPerformed
+
+    private void jbtExitSnakesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExitSnakesActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jbtExitSnakesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cards;

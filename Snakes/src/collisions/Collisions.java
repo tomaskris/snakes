@@ -8,7 +8,6 @@ package collisions;
 import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
 import static constants.Constants.MAX_WIDTH_GAME_BOARD;
 import field.food.Food;
-import field.snake.Head;
 import java.util.List;
 import manager.Manager;
 import manager.SnakeManager;

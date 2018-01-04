@@ -5,7 +5,7 @@
  */
 package states;
 
-import enums.Direction;
+import enums.TypeDirection;
 import field.Field;
 import java.awt.Graphics2D;
 import field.Position;
@@ -22,7 +22,7 @@ public interface IFieldState {
     public IFieldState turnRight();
     public void move();
     public void draw(Graphics2D g2);
-    public Direction getDirection();
+    public TypeDirection getDirection();
     public Position getPosition();
     public Field getField();
     

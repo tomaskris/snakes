@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import keyboard.Arrows;
 import collisions.Collisions;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import keyboard.ASDW;
 import manager.FoodManager;
 import manager.Manager;
@@ -124,18 +126,58 @@ public class GameManager implements Runnable {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    private void sortPlayers() {
+        players.sort((Manager z1, Manager z2) -> {
+            if (((SnakeManager)z1).getPlayerScore() < ((SnakeManager)z2).getPlayerScore()) {
+                return 1;
+            }
+            if (((SnakeManager)z1).getPlayerScore() > ((SnakeManager)z2).getPlayerScore()) {
+                return -1;
+            }
+            return 0;
+        });
+    }
+
     public void gameOver() {
+        inGame = false;
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
 
-        System.exit(0);
+        String zprava = "Game Over!";
+        Font font = new Font("Helvetica", Font.BOLD, 20);
+
+        g2.setColor(Color.BLACK); //vyèištìní
+        g2.fillRect(10, 30, MAX_WIDTH_GAME_BOARD + 10, MAX_HEIGHT_GAME_BOARD + 10);
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(font);
+        g2.drawString(zprava, (MAX_WIDTH_GAME_BOARD / 2) - 30, 100);
+        int pom = 130;
+        sortPlayers();
+        for (Manager player : players) {
+            zprava = ((SnakeManager)player).getPlayerName() + " >> " + ((SnakeManager)player).getPlayerScore() + " points";
+            g2.drawString(zprava, (MAX_WIDTH_GAME_BOARD / 2) - 100, pom);
+            pom += 25;
+        }
+        g2.drawString(">> Press any key to continue <<", 60, 300);
+
+        g2.dispose();
+
+        bs.show();
+
+        Toolkit.getDefaultToolkit().sync();
     }
 
     public List<Manager> getPlayers() {
         return players;
+    }
+
+    public boolean isInGame() {
+        return inGame;
     }
 
 }

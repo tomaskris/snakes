@@ -5,11 +5,8 @@
  */
 package manager;
 
-import enums.Direction;
-import enums.TypeSnake;
 import field.Field;
 import field.snake.Snake;
-import generator.Generator;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import player.Player;
@@ -27,18 +24,16 @@ import states.FieldUp;
 public class SnakeManager extends Manager {
 
     private Player player;
-    private Generator generator;
     private boolean isStarted;
     private boolean isLive;
 
     public SnakeManager(Graphics2D graphic, Player player) {
         super(graphic);
-        this.generator = Generator.getInstance();
         this.player = player;
         this.isStarted = false;
         this.isLive = true;
         this.drawField = new ArrayList<>();
-        drawField.add(generator.getRandSnake());
+        drawField.add(getGenerator().getRandSnake());
     }
 
     @Override
@@ -125,6 +120,14 @@ public class SnakeManager extends Manager {
 
     public IKeyboard getKeyboard() {
         return player.getKeyboard();
+    }
+
+    public int getPlayerScore() {
+        return player.getScore();
+    }
+    
+    public String getPlayerName() {
+        return player.getName();
     }
 
     public boolean isLive() {

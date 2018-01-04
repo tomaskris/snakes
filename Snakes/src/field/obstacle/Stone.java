@@ -9,6 +9,6 @@ package field.obstacle;
  *
  * @author Tomy
  */
-public class Stone {
+public class Stone extends Obstacle {
     
 }

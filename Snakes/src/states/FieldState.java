@@ -5,7 +5,7 @@
  */
 package states;
 
-import enums.Direction;
+import enums.TypeDirection;
 import field.Field;
 import field.Position;
 import java.awt.Graphics2D;
@@ -17,7 +17,7 @@ import java.awt.Graphics2D;
 abstract class FieldState implements IFieldState {
 
     protected Field field;
-    protected Direction direction;
+    protected TypeDirection direction;
     
     public FieldState(Field field) {
         this.field = field;
@@ -29,7 +29,7 @@ abstract class FieldState implements IFieldState {
     }
 
     @Override
-    public Direction getDirection() {
+    public TypeDirection getDirection() {
         return direction;
     }
 

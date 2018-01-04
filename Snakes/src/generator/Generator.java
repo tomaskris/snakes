@@ -87,7 +87,6 @@ public class Generator {
             default:
                 return null;
         }
-//        return new FieldDown(field);
     }
 
     public static Generator getInstance() {
