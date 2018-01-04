@@ -15,6 +15,9 @@ import field.Field;
 import field.food.Food;
 import field.snake.Snake;
 import states.FieldDown;
+import states.FieldLeft;
+import states.FieldRight;
+import states.FieldUp;
 import states.IFieldState;
 
 /**
@@ -67,23 +70,24 @@ public class Generator {
     public IFieldState getRandSnake() {
         Snake head = new Snake();
         head.changePosition(new Position(100, 100));
+        head.changePosition(getRandCoordinate());
         return getRandState(randStateSnake, head);
     }
     
     private IFieldState getRandState(Random randStateFood, Field field){
-//        switch (randStateFood.nextInt(4)) {
-//            case 0:
-//                return new FieldDown(field);
-//            case 1:
-//                return new FieldUp(field);
-//            case 2:
-//                return new FieldLeft(field);
-//            case 3:
-//                return new FieldRight(field);
-//            default:
-//                return null;
-//        }
-        return new FieldDown(field);
+        switch (randStateFood.nextInt(4)) {
+            case 0:
+                return new FieldDown(field);
+            case 1:
+                return new FieldUp(field);
+            case 2:
+                return new FieldLeft(field);
+            case 3:
+                return new FieldRight(field);
+            default:
+                return null;
+        }
+//        return new FieldDown(field);
     }
 
     public static Generator getInstance() {

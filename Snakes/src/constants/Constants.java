@@ -5,8 +5,6 @@
  */
 package constants;
 
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author Tomy
@@ -16,6 +14,10 @@ public class Constants {
     public static final int MAX_WIDTH_GAME_BOARD = 400;
     //max vyska herneho platna
     public static final int MAX_HEIGHT_GAME_BOARD = 300;
+    //max sirka herneho platna
+    public static final int MAX_WIDTH_WINDOW = 430;
+    //max vyska herneho platna
+    public static final int MAX_HEIGHT_WINDOW = 350;
     //velkost itemu v pixeloch
     public static final int SIZE_IN_PIXEL = 10;
     //pocet jedla, ktore sa zobrazuje na hracej ploche
@@ -34,9 +36,5 @@ public class Constants {
     public static final String IMAGE_MUSHROOMS = "/images/foods/mushrooms.png";
     public static final String IMAGE_PINEAPPLE = "/images/foods/pineapple.png";
     public static final String IMAGE_STRAWBERRY = "/images/foods/strawberry.png";
-    
-    //image pre hady
-    public static final String IMAGE_HEAD_SNAKE = "";
-    public static final String IMAGE_BODY_SNAKE = "";
     
 }

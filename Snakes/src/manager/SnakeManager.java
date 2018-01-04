@@ -27,96 +27,51 @@ import states.FieldUp;
 public class SnakeManager extends Manager {
 
     private Player player;
-
     private Generator generator;
+    private boolean isStarted;
+    private boolean isLive;
 
     public SnakeManager(Graphics2D graphic, Player player) {
         super(graphic);
         this.generator = Generator.getInstance();
         this.player = player;
+        this.isStarted = false;
+        this.isLive = true;
         this.drawField = new ArrayList<>();
         drawField.add(generator.getRandSnake());
     }
 
     @Override
     public void draw() {
-        String path = "";
-        IFieldState snake = null;
-        for (int i = 0; i < drawField.size(); i++) {
-            snake = drawField.get(i);
-            if (i == 0) {
-                path = "/images/snakes/" + player.getTypeSnake().getName() + "/head"
-                        + snake.getDirection().name() + ".png";
-                snake.getField().changeImagePath(path);
-            } else {
-                path = "/images/snakes/" + player.getTypeSnake().getName() + "/body.png";
-                snake.getField().changeImagePath(path);
-            }
-            snake.draw(getGraphics());
-        }
-
-//        String path = "";
-//        IFieldState snake = null;
-//        Direction previous = null;
-//        for (int i = 0; i < drawField.size(); i++) {
-//            snake = drawField.get(i);
-//            if (previous == null) {
-//                path = "/images/snakes/" + player.getTypeSnake().getName() + "/head"
-//                        + snake.getDirection().name() + ".png";
-//                snake.getField().changeImagePath(path);
-//            } else {
-////                path = "/images/snakes/" + player.getTypeSnake().getName() + "/body"
-////                        + snake.getDirection().name() + ".png";
-////                snake.getField().changeImagePath(path);
-//                changePathIconBody(snake, previous);
-//            }
-//            previous = snake.getDirection();
-//            snake.draw(getGraphics());
-//        }
-    }
-
-    private void changePathIconBody(IFieldState snake, Direction previous) {
-        Direction curDir = snake.getDirection();
-        if(curDir.equals(previous)){
-            snake.getField().changeImagePath("/images/snakes/"
-                    + player.getTypeSnake().getName() + "/body"
-                    + curDir.name() + ".png");
-        } else {
-            if(curDir.equals(Direction.LEFT) && previous.equals(Direction.DOWN)
-                    || curDir.equals(Direction.UP) && previous.equals(Direction.RIGHT)){
-                snake.getField().changeImagePath("/images/snakes/"
-                    + player.getTypeSnake().getName() + "/turnLU.png");
-            } else 
-            if(curDir.equals(Direction.DOWN) && previous.equals(Direction.RIGHT)
-                    || curDir.equals(Direction.LEFT) && previous.equals(Direction.UP)){
-                snake.getField().changeImagePath("/images/snakes/"
-                    + player.getTypeSnake().getName() + "/turnLD.png");
-            } else 
-            if(curDir.equals(Direction.RIGHT) && previous.equals(Direction.DOWN)
-                    || curDir.equals(Direction.UP) && previous.equals(Direction.LEFT)){
-                snake.getField().changeImagePath("/images/snakes/"
-                    + player.getTypeSnake().getName() + "/turnRU.png");
-            } else {
-//            if(curDir.equals(Direction.RIGHT) && previous.equals(Direction.UP)
-//                    || curDir.equals(Direction.DOWN) && previous.equals(Direction.LEFT)){
-                snake.getField().changeImagePath("/images/snakes/"
-                    + player.getTypeSnake().getName() + "/turnRD.png");
+        if (isLive) {
+            String path = "";
+            IFieldState snake = null;
+            for (int i = 0; i < drawField.size(); i++) {
+                snake = drawField.get(i);
+                if (i == 0) {
+                    path = "/images/snakes/" + player.getTypeSnake().getName() + "/head"
+                            + snake.getDirection().name() + ".png";
+                    snake.getField().changeImagePath(path);
+                } else {
+                    path = "/images/snakes/" + player.getTypeSnake().getName() + "/body.png";
+                    snake.getField().changeImagePath(path);
+                }
+                snake.draw(getGraphics());
             }
         }
     }
 
     @Override
     public void move() {
-//        for (IFieldState snake : drawField) {
-//            snake.move();
-//        }
-        IFieldState partBody = null;
-        for (int i = drawField.size() - 1; i > 0; i--) {
-            partBody = drawField.get(i);
-            partBody.move();
-            changeState(i, drawField.get(i - 1));
+        if (isStarted) {
+            IFieldState partBody = null;
+            for (int i = drawField.size() - 1; i > 0; i--) {
+                partBody = drawField.get(i);
+                partBody.move();
+                changeState(i, drawField.get(i - 1));
+            }
+            drawField.get(0).move();
         }
-        drawField.get(0).move();
     }
 
     private IFieldState getHead() {
@@ -172,23 +127,35 @@ public class SnakeManager extends Manager {
         return player.getKeyboard();
     }
 
+    public boolean isLive() {
+        return isLive;
+    }
+    
+    public void setLive(boolean bool){
+        this.isLive = bool;
+    }
+
     @Override
     public void moveUp() {
+        isStarted = true;
         drawField.set(0, drawField.get(0).moveUp());
     }
 
     @Override
     public void moveDown() {
+        isStarted = true;
         drawField.set(0, drawField.get(0).moveDown());
     }
 
     @Override
     public void turnLeft() {
+        isStarted = true;
         drawField.set(0, drawField.get(0).turnLeft());
     }
 
     @Override
     public void turnRight() {
+        isStarted = true;
         drawField.set(0, drawField.get(0).turnRight());
     }
 

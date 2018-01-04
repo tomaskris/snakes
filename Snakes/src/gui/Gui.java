@@ -6,7 +6,9 @@
 package gui;
 
 import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
+import static constants.Constants.MAX_HEIGHT_WINDOW;
 import static constants.Constants.MAX_WIDTH_GAME_BOARD;
+import static constants.Constants.MAX_WIDTH_WINDOW;
 import game_logic.GameManager;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -53,9 +55,9 @@ public class Gui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Snakes");
-        setPreferredSize(new Dimension(MAX_WIDTH_GAME_BOARD, MAX_HEIGHT_GAME_BOARD));
+        setPreferredSize(new Dimension(MAX_WIDTH_WINDOW, MAX_HEIGHT_WINDOW));
 
-        cards.setPreferredSize(new Dimension(MAX_WIDTH_GAME_BOARD, MAX_HEIGHT_GAME_BOARD));
+        cards.setPreferredSize(new Dimension(MAX_WIDTH_WINDOW, MAX_HEIGHT_WINDOW));
         cards.setLayout(new java.awt.CardLayout());
 
         jbtStartGame.setText("Start Game");

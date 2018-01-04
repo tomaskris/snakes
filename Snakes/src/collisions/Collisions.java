@@ -10,6 +10,8 @@ import static constants.Constants.MAX_WIDTH_GAME_BOARD;
 import field.food.Food;
 import field.snake.Head;
 import java.util.List;
+import manager.Manager;
+import manager.SnakeManager;
 import states.IFieldState;
 
 /**
@@ -51,14 +53,31 @@ public class Collisions {
 
     public static int checkEatenFood(List<IFieldState> snake, List<IFieldState> drawFoods) {
         int score = 0;
+        IFieldState head = snake.get(0);
         for (IFieldState drawFood : drawFoods) {
-            if (snake.get(0).getPosition().getX() == drawFood.getPosition().getX() && snake.get(0).getPosition().getY() == drawFood.getPosition().getY()) {
-                score = ((Food)drawFood.getField()).getScore();
-                drawFoods.set(drawFoods.indexOf(drawFood), null);
-                return score;
+            if (drawFood != null) {
+                if (head.getPosition().getX() == drawFood.getPosition().getX() && head.getPosition().getY() == drawFood.getPosition().getY()) {
+                    score = ((Food) drawFood.getField()).getScore();
+                    drawFoods.set(drawFoods.indexOf(drawFood), null);
+                    return score;
+                }
             }
         }
         return score;
+    }
+
+    public static boolean checkSnakesCollision(Manager curPlayer, List<Manager> players) {
+        IFieldState head = curPlayer.getDrawField().get(0);
+        for (Manager manager : players) {
+            if (!curPlayer.equals(manager) && ((SnakeManager)manager).isLive()) {
+                for (IFieldState snakeBody : manager.getDrawField()) {
+                    if (head.getPosition().getX() == snakeBody.getPosition().getX() && head.getPosition().getY() == snakeBody.getPosition().getY()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }
