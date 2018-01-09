@@ -11,7 +11,7 @@ import field.Field;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 public abstract class Food extends Field {
     

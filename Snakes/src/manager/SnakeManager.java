@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package manager;
 
 import enums.TypeSpeed;
@@ -21,7 +16,7 @@ import states.FieldUp;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 public class SnakeManager extends Manager {
 
@@ -43,35 +38,39 @@ public class SnakeManager extends Manager {
 
     @Override
     public void draw() {
-        if (isLive) {
-            String path = "";
-            IFieldState snake = null;
-            for (int i = 0; i < drawField.size(); i++) {
-                snake = drawField.get(i);
-                if (i == 0) {
-                    path = "/images/snakes/" + player.getTypeSnake().getName() + "/head"
-                            + snake.getDirection().name() + ".png";
-                    snake.getField().changeImagePath(path);
-                } else {
-                    path = "/images/snakes/" + player.getTypeSnake().getName() + "/body.png";
-                    snake.getField().changeImagePath(path);
-                }
-                snake.draw(getGraphics());
-            }
+        if (!isLive) {
+            return;
         }
+
+        String path;
+        IFieldState snake = null;
+        for (int i = 0; i < drawField.size(); i++) {
+            snake = drawField.get(i);
+            if (i == 0) {
+                path = "/images/snakes/" + player.getTypeSnake().getName() + "/head"
+                        + snake.getDirection().name() + ".png";
+            } else {
+                path = "/images/snakes/" + player.getTypeSnake().getName() + "/body.png";
+            }
+            snake.getField().changeImagePath(path);
+            snake.draw(getGraphics());
+        }
+
     }
 
     @Override
     public void move() {
-        if (isStarted) {
-            IFieldState partBody = null;
-            for (int i = drawField.size() - 1; i > 0; i--) {
-                partBody = drawField.get(i);
-                partBody.move();
-                changeState(i, drawField.get(i - 1));
-            }
-            drawField.get(0).move();
+        if (!isStarted) {
+            return;
         }
+
+        IFieldState partBody = null;
+        for (int i = drawField.size() - 1; i > 0; i--) {
+            partBody = drawField.get(i);
+            partBody.move();
+            changeState(i, drawField.get(i - 1));
+        }
+        drawField.get(0).move();
     }
 
     private IFieldState getHead() {
@@ -131,7 +130,7 @@ public class SnakeManager extends Manager {
     public void addScoreToPlayer(int score) {
         player.increaseScore(score);
     }
-    
+
     public void fastSpeed() {
         this.speed = FAST;
         checkThredAndSetNormalSpeed();
@@ -141,9 +140,9 @@ public class SnakeManager extends Manager {
         this.speed = SLOW;
         checkThredAndSetNormalSpeed();
     }
-    
-    private void checkThredAndSetNormalSpeed(){
-        if(thread != null && thread.isAlive()){
+
+    private void checkThredAndSetNormalSpeed() {
+        if (thread != null && thread.isAlive()) {
             thread = null;
         }
         normalSpeed();

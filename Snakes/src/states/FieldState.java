@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package states;
 
 import enums.TypeDirection;
@@ -12,13 +7,13 @@ import java.awt.Graphics2D;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 abstract class FieldState implements IFieldState {
 
     protected Field field;
     protected TypeDirection direction;
-    
+
     public FieldState(Field field) {
         this.field = field;
     }
@@ -37,7 +32,7 @@ abstract class FieldState implements IFieldState {
     public Position getPosition() {
         return field.getPosition();
     }
-    
+
     public void setPosition(Position position) {
         this.field.changePosition(position);
     }
@@ -66,5 +61,5 @@ abstract class FieldState implements IFieldState {
     public IFieldState turnRight() {
         return this;
     }
-    
+
 }

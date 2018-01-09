@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package states;
 
 import static constants.Constants.SIZE_IN_PIXEL;
@@ -12,17 +7,17 @@ import field.Position;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 public class FieldUp extends FieldState {
-    
+
     public FieldUp(Field field) {
         super(field);
         this.direction = TypeDirection.UP;
     }
-    
+
     @Override
-    public IFieldState turnLeft(){
+    public IFieldState turnLeft() {
         return new FieldLeft(field);
     }
 
@@ -40,5 +35,5 @@ public class FieldUp extends FieldState {
     public void setPosition(Position position) {
         super.setPosition(position);
     }
-    
+
 }

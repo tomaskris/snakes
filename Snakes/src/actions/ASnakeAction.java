@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package actions;
 
 import manager.SnakeManager;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 abstract class ASnakeAction implements ISnakeAction {
-    
+
     private SnakeManager snake;
 
     public ASnakeAction(SnakeManager snake) {
@@ -22,5 +17,5 @@ abstract class ASnakeAction implements ISnakeAction {
     public SnakeManager getSnake() {
         return snake;
     }
-    
+
 }

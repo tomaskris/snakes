@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 public class Pineapple extends Food {
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package manager;
 
 import java.awt.Graphics2D;
@@ -15,7 +10,7 @@ import states.IFieldState;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 public class FoodManager extends Manager {
 
@@ -23,9 +18,9 @@ public class FoodManager extends Manager {
 
     public FoodManager(Graphics2D graphics) {
         super(graphics);
-        this.foods = new ArrayList<>();
+        foods = new ArrayList<>();
         //jedla, ktore sa vykresluju na plochu
-        this.drawField = new ArrayList<>(NUMBER_OF_FOODS);
+        drawField = new ArrayList<>(NUMBER_OF_FOODS);
         loadFoods();
     }
 
@@ -67,6 +62,7 @@ public class FoodManager extends Manager {
 
     @Override
     public void move() {
+        // TODO
         //ak je jedlo pohybujuce sa, tak sa bude pohybovat
     }
 

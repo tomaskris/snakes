@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package generator;
 
 import java.util.List;
@@ -21,10 +16,10 @@ import states.FieldUp;
 import states.IFieldState;
 
 /**
+ * Singleton design pattern
  *
- * @author Tomy
+ * @author Tomáš
  */
-//SINGLETON
 public class Generator {
 
     private static Generator instance = new Generator();
@@ -35,6 +30,9 @@ public class Generator {
     private Random randStateSnake;
     private Random randStateFood;
 
+    /**
+     * Private constructor
+     */
     private Generator() {
         Random randSeed = new Random();
         this.randCoordinate = new Random(randSeed.nextInt());
@@ -53,28 +51,34 @@ public class Generator {
         return new Position(x, y);
     }
 
+    /**
+     * Prototype design pattern
+     *
+     * @param list
+     * @return
+     */
     public IFieldState getRandFood(List<Field> list) {
-        Food food = ((Food)list.get(randEat.nextInt(list.size()))).copy();
+        Food food = ((Food) list.get(randEat.nextInt(list.size()))).copy();
         food.changePosition(getRandCoordinate());
         return getRandStateFood(food);
     }
-    
+
     public IFieldState getRandFood(Field food) {
         return getRandStateFood(food);
     }
-    
-    private IFieldState getRandStateFood(Field field){
+
+    private IFieldState getRandStateFood(Field field) {
         return getRandState(randStateFood, field);
     }
-    
+
     public IFieldState getRandSnake() {
         Snake head = new Snake();
         head.changePosition(new Position(100, 100));
         head.changePosition(getRandCoordinate());
         return getRandState(randStateSnake, head);
     }
-    
-    private IFieldState getRandState(Random randStateFood, Field field){
+
+    private IFieldState getRandState(Random randStateFood, Field field) {
         switch (randStateFood.nextInt(4)) {
             case 0:
                 return new FieldDown(field);

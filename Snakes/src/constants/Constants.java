@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package constants;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 public class Constants {
     //max sirka herneho platna
@@ -33,15 +28,16 @@ public class Constants {
     public static final int SLOW_SPEED = 3;
     
     //image pre jablko
-    public static final String IMAGE_APPLE = "/images/foods/apple.png";
-    public static final String IMAGE_CARROT = "/images/foods/carrot.png";
-    public static final String IMAGE_CHERRY = "/images/foods/cherry.png";
-    public static final String IMAGE_CORN = "/images/foods/corn.png";
-    public static final String IMAGE_GRAPES = "/images/foods/grapes.png";
-    public static final String IMAGE_LEMON = "/images/foods/lemon.png";
-    public static final String IMAGE_MELON = "/images/foods/melon.png";
-    public static final String IMAGE_MUSHROOMS = "/images/foods/mushrooms.png";
-    public static final String IMAGE_PINEAPPLE = "/images/foods/pineapple.png";
-    public static final String IMAGE_STRAWBERRY = "/images/foods/strawberry.png";
+    private static final String IMAGE_FOOD_DIR = "/images/foods/";
+    public static final String IMAGE_APPLE = IMAGE_FOOD_DIR + "apple.png";
+    public static final String IMAGE_CARROT = IMAGE_FOOD_DIR + "carrot.png";
+    public static final String IMAGE_CHERRY = IMAGE_FOOD_DIR + "cherry.png";
+    public static final String IMAGE_CORN = IMAGE_FOOD_DIR + "corn.png";
+    public static final String IMAGE_GRAPES = IMAGE_FOOD_DIR + "grapes.png";
+    public static final String IMAGE_LEMON = IMAGE_FOOD_DIR + "lemon.png";
+    public static final String IMAGE_MELON = IMAGE_FOOD_DIR + "melon.png";
+    public static final String IMAGE_MUSHROOMS = IMAGE_FOOD_DIR + "mushrooms.png";
+    public static final String IMAGE_PINEAPPLE = IMAGE_FOOD_DIR + "pineapple.png";
+    public static final String IMAGE_STRAWBERRY = IMAGE_FOOD_DIR + "strawberry.png";
     
 }

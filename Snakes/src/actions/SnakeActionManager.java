@@ -10,7 +10,7 @@
 //
 ///**
 // *
-// * @author Tomy
+// * @author Tomáš
 // */
 //public class SnakeActionManager {
 //

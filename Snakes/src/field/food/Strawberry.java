@@ -11,7 +11,7 @@ import static constants.Constants.IMAGE_STRAWBERRY;
 
 /**
  *
- * @author Tomy
+ * @author Tomáš
  */
 public class Strawberry extends Food {
 
