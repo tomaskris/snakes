@@ -5,8 +5,12 @@
  */
 package keyboard;
 
+import actions.KeyDown;
+import actions.KeyLeft;
+import actions.KeyRight;
+import actions.KeyUp;
 import java.awt.event.KeyEvent;
-import manager.Manager;
+import manager.SnakeManager;
 
 /**
  *
@@ -15,21 +19,22 @@ import manager.Manager;
 public class Arrows implements IKeyboard {
 
     @Override
-    public boolean isKeyPressed(int key, Manager manager) {
+    public boolean isKeyPressed(int key, SnakeManager manager) {
         switch (key) {
             case KeyEvent.VK_UP:
-                manager.moveUp();
+                new KeyUp(manager).execute();
                 return true;
             case KeyEvent.VK_DOWN:
-                manager.moveDown();
+                new KeyDown(manager).execute();
                 return true;
             case KeyEvent.VK_LEFT:
-                manager.turnLeft();
+                new KeyLeft(manager).execute();
                 return true;
             case KeyEvent.VK_RIGHT:
-                manager.turnRight();
+                new KeyRight(manager).execute();
                 return true;
-            default: return false;
+            default:
+                return false;
         }
     }
 

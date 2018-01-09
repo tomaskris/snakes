@@ -19,7 +19,7 @@ public class Grapes extends Food {
         this.icon = new ImageIcon(getClass().getResource(IMAGE_GRAPES));
         
         this.score = 12;
-        this.typeEffect = TypeEffect.NOTHING;
+        this.typeEffect = TypeEffect.EXPAND_BODY;
         this.isMoving = false;
     }
     

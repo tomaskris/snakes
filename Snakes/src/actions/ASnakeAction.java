@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package keyboard;
+package actions;
 
 import manager.SnakeManager;
 
@@ -11,8 +11,16 @@ import manager.SnakeManager;
  *
  * @author Tomy
  */
-public interface IKeyboard {
+abstract class ASnakeAction implements ISnakeAction {
     
-    public boolean isKeyPressed(int key, SnakeManager manager);
+    private SnakeManager snake;
+
+    public ASnakeAction(SnakeManager snake) {
+        this.snake = snake;
+    }
+
+    public SnakeManager getSnake() {
+        return snake;
+    }
     
 }

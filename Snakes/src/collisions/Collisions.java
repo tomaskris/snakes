@@ -7,6 +7,7 @@ package collisions;
 
 import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
 import static constants.Constants.MAX_WIDTH_GAME_BOARD;
+import enums.TypeEffect;
 import field.food.Food;
 import java.util.List;
 import manager.Manager;
@@ -50,19 +51,22 @@ public class Collisions {
         return false;
     }
 
-    public static int checkEatenFood(List<IFieldState> snake, List<IFieldState> drawFoods) {
-        int score = 0;
+    public static Food checkEatenFood(List<IFieldState> snake, List<IFieldState> drawFoods) {
+//        int score = 0;
+        Food food = null;
         IFieldState head = snake.get(0);
         for (IFieldState drawFood : drawFoods) {
             if (drawFood != null) {
                 if (head.getPosition().getX() == drawFood.getPosition().getX() && head.getPosition().getY() == drawFood.getPosition().getY()) {
-                    score = ((Food) drawFood.getField()).getScore();
+                    food = (Food) drawFood.getField();
+//                    score = food.getScore();
+                    
                     drawFoods.set(drawFoods.indexOf(drawFood), null);
-                    return score;
+                    return food;
                 }
             }
         }
-        return score;
+        return food;
     }
 
     public static boolean checkSnakesCollision(Manager curPlayer, List<Manager> players) {

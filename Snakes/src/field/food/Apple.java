@@ -19,7 +19,7 @@ public class Apple extends Food {
         this.icon = new ImageIcon(getClass().getResource(IMAGE_APPLE));
         
         this.score = 15;
-        this.typeEffect = TypeEffect.NOTHING;
+        this.typeEffect = TypeEffect.SPEED_UP;
         this.isMoving = false;
     }
     

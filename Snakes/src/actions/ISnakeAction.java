@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package keyboard;
-
-import manager.SnakeManager;
+package actions;
 
 /**
  *
  * @author Tomy
  */
-public interface IKeyboard {
+public interface ISnakeAction {
     
-    public boolean isKeyPressed(int key, SnakeManager manager);
+    public void execute();
     
 }

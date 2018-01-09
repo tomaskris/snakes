@@ -19,7 +19,7 @@ public class Cherry extends Food {
         this.icon = new ImageIcon(getClass().getResource(IMAGE_CHERRY));
         
         this.score = 10;
-        this.typeEffect = TypeEffect.NOTHING;
+        this.typeEffect = TypeEffect.NARROW_BODY;
         this.isMoving = false;
     }
     

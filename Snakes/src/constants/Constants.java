@@ -23,7 +23,14 @@ public class Constants {
     //pocet jedla, ktore sa zobrazuje na hracej ploche
     public static final int NUMBER_OF_FOODS = 3;
     //FPS (1000/FRAME_DELAY), ovplyvnuje rychlost hry
-    public static final int FRAME_DELAY = 100;
+    public static final int FRAME_DELAY = 50;
+    
+    //rychla rychlost hada
+    public static final int FAST_SPEED = 1;
+    //konstantna rychlost hada
+    public static final int CONSTANT_SPEED = 2;
+    //pomala rychlost hada
+    public static final int SLOW_SPEED = 3;
     
     //image pre jablko
     public static final String IMAGE_APPLE = "/images/foods/apple.png";

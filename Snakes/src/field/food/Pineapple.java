@@ -19,7 +19,7 @@ public class Pineapple extends Food {
         this.icon = new ImageIcon(getClass().getResource(IMAGE_PINEAPPLE));
         
         this.score = 13;
-        this.typeEffect = TypeEffect.NOTHING;
+        this.typeEffect = TypeEffect.EXPAND_BODY;
         this.isMoving = false;
     }
     

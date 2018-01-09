@@ -5,6 +5,11 @@
  */
 package game_logic;
 
+import actions.ExpandBody;
+import actions.ISnakeAction;
+import actions.NarrowBody;
+import actions.SpeedDown;
+import actions.SpeedUp;
 import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
 import static constants.Constants.MAX_WIDTH_GAME_BOARD;
 import static constants.Constants.FRAME_DELAY;
@@ -17,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import keyboard.Arrows;
 import collisions.Collisions;
+import field.food.Food;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import keyboard.ASDW;
 import manager.FoodManager;
 import manager.Manager;
@@ -51,9 +56,9 @@ public class GameManager implements Runnable {
 
     public void createNewGame() {
         players.add(new SnakeManager((Graphics2D) bs.getDrawGraphics(),
-                new Player("Player1", TypeSnake.YELLOW_SNAKE, new Arrows())));
+                new Player("Tomy", TypeSnake.BROWN_SNAKE, new Arrows())));
         players.add(new SnakeManager((Graphics2D) bs.getDrawGraphics(),
-                new Player("Player2", TypeSnake.GREEN_SNAKE, new ASDW())));
+                new Player("Nika", TypeSnake.YELLOW_SNAKE, new ASDW())));
 
         inGame = true;
         Thread animacia = new Thread(this, "Game");
@@ -63,33 +68,53 @@ public class GameManager implements Runnable {
     @Override
     public void run() {
         cycleTime = System.currentTimeMillis();
+        SnakeManager player;
+        long i = 0;
 
         while (deadPlayers != players.size()) {
-            updateLogic();
+            for (Manager manager : players) {
+                player = (SnakeManager) manager;
+                if (i % player.getSpeed().getValue() == 0) {
+                    updateLogic(player);
+                }
+            }
             updateGui();
             synchFrameRate();
+            i++;
         }
+
         //koniec hry
         gameOver();
     }
 
-    private void updateLogic() {
+    private void updateLogic(SnakeManager player) {
         //pre kazdeho hraca
-        int plusScore;
-        for (Manager player : players) {
-            if (((SnakeManager) player).isLive()) {
-                if (Collisions.checkCollision(player.getDrawField())) {
-                    ((SnakeManager) player).setLive(false);
-                    deadPlayers++;
-                } else if ((plusScore = Collisions.checkEatenFood(player.getDrawField(), foodManager.getDrawField())) > 0) {
-                    ((SnakeManager) player).addScoreToPlayer(plusScore);
-                    ((SnakeManager) player).expandBody();
-                } else {
-                    player.move();
-                    if (Collisions.checkSnakesCollision(player, players)) {
-                        ((SnakeManager) player).setLive(false);
-                        deadPlayers++;
-                    }
+        Food food;
+        if (player.isLive()) {
+            if (Collisions.checkCollision(player.getDrawField())) {
+                killPlayer(player);
+            } else if ((food = Collisions.checkEatenFood(player.getDrawField(), foodManager.getDrawField())) != null) {
+                player.addScoreToPlayer(food.getScore());
+                switch (food.getTypeEffect()) {
+                    case EXPAND_BODY:
+                        new ExpandBody(player).execute();
+                        break;
+                    case NARROW_BODY:
+                        new NarrowBody(player).execute();
+                        break;
+                    case SPEED_UP:
+                        new SpeedUp(player).execute();
+                        break;
+                    case SPEED_DOWN:
+                        new SpeedDown(player).execute();
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                player.move();
+                if (Collisions.checkSnakesCollision(player, players)) {
+                    killPlayer(player);
                 }
             }
         }
@@ -128,10 +153,10 @@ public class GameManager implements Runnable {
 
     private void sortPlayers() {
         players.sort((Manager z1, Manager z2) -> {
-            if (((SnakeManager)z1).getPlayerScore() < ((SnakeManager)z2).getPlayerScore()) {
+            if (((SnakeManager) z1).getPlayerScore() < ((SnakeManager) z2).getPlayerScore()) {
                 return 1;
             }
-            if (((SnakeManager)z1).getPlayerScore() > ((SnakeManager)z2).getPlayerScore()) {
+            if (((SnakeManager) z1).getPlayerScore() > ((SnakeManager) z2).getPlayerScore()) {
                 return -1;
             }
             return 0;
@@ -159,7 +184,7 @@ public class GameManager implements Runnable {
         int pom = 130;
         sortPlayers();
         for (Manager player : players) {
-            zprava = ((SnakeManager)player).getPlayerName() + " >> " + ((SnakeManager)player).getPlayerScore() + " points";
+            zprava = ((SnakeManager) player).getPlayerName() + " >> " + ((SnakeManager) player).getPlayerScore() + " points";
             g2.drawString(zprava, (MAX_WIDTH_GAME_BOARD / 2) - 100, pom);
             pom += 25;
         }
@@ -170,6 +195,11 @@ public class GameManager implements Runnable {
         bs.show();
 
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    public void killPlayer(SnakeManager player) {
+        player.setLive(false);
+        deadPlayers++;
     }
 
     public List<Manager> getPlayers() {

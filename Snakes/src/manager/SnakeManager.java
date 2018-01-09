@@ -5,6 +5,8 @@
  */
 package manager;
 
+import enums.TypeSpeed;
+import static enums.TypeSpeed.*;
 import field.Field;
 import field.snake.Snake;
 import java.awt.Graphics2D;
@@ -26,6 +28,8 @@ public class SnakeManager extends Manager {
     private Player player;
     private boolean isStarted;
     private boolean isLive;
+    private TypeSpeed speed; //suvisi s rychlostou hada
+    private Thread thread;
 
     public SnakeManager(Graphics2D graphic, Player player) {
         super(graphic);
@@ -34,6 +38,7 @@ public class SnakeManager extends Manager {
         this.isLive = true;
         this.drawField = new ArrayList<>();
         drawField.add(getGenerator().getRandSnake());
+        this.speed = NORMAL;
     }
 
     @Override
@@ -80,6 +85,15 @@ public class SnakeManager extends Manager {
         drawField.get(0).move();
     }
 
+    public void narrowBody() {
+        int index;
+        //ak to nieje hlava
+        if ((index = drawField.size()) > 1) {
+            //odoberiem z konca cast tela, ak existuje
+            drawField.remove(index - 1);
+        }
+    }
+
     private IFieldState createPartBody() {
         Field partField = new Snake();
         partField.changePosition(getHead().getPosition());
@@ -117,6 +131,42 @@ public class SnakeManager extends Manager {
     public void addScoreToPlayer(int score) {
         player.increaseScore(score);
     }
+    
+    public void fastSpeed() {
+        this.speed = FAST;
+        checkThredAndSetNormalSpeed();
+    }
+
+    public void slowSpeed() {
+        this.speed = SLOW;
+        checkThredAndSetNormalSpeed();
+    }
+    
+    private void checkThredAndSetNormalSpeed(){
+        if(thread != null && thread.isAlive()){
+            thread = null;
+        }
+        normalSpeed();
+    }
+
+    private void normalSpeed() {
+        this.thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                    speed = NORMAL;
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public TypeSpeed getSpeed() {
+        return speed;
+    }
 
     public IKeyboard getKeyboard() {
         return player.getKeyboard();
@@ -125,7 +175,7 @@ public class SnakeManager extends Manager {
     public int getPlayerScore() {
         return player.getScore();
     }
-    
+
     public String getPlayerName() {
         return player.getName();
     }
@@ -133,8 +183,8 @@ public class SnakeManager extends Manager {
     public boolean isLive() {
         return isLive;
     }
-    
-    public void setLive(boolean bool){
+
+    public void setLive(boolean bool) {
         this.isLive = bool;
     }
 

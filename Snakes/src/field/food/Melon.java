@@ -19,7 +19,7 @@ public class Melon extends Food {
         this.icon = new ImageIcon(getClass().getResource(IMAGE_MELON));
         
         this.score = 17;
-        this.typeEffect = TypeEffect.NOTHING;
+        this.typeEffect = TypeEffect.SPEED_DOWN;
         this.isMoving = false;
     }
     

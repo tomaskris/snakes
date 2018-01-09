@@ -141,9 +141,11 @@ public class Gui extends javax.swing.JFrame {
     private void jplGameBoardKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jplGameBoardKeyPressed
         System.out.println("Key pressed");
         int key = evt.getKeyCode();
+        SnakeManager player;
         if (manager.isInGame()) {
-            for (Manager player : manager.getPlayers()) {
-                if (((SnakeManager) player).getKeyboard().isKeyPressed(key, player)) {
+            for (Manager manager : manager.getPlayers()) {
+                player = (SnakeManager) manager;
+                if (player.getKeyboard().isKeyPressed(key, player)) {
                     break;
                 }
             }

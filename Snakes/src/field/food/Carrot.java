@@ -19,7 +19,7 @@ public class Carrot extends Food {
         this.icon = new ImageIcon(getClass().getResource(IMAGE_CARROT));
         
         this.score = 7;
-        this.typeEffect = TypeEffect.NOTHING;
+        this.typeEffect = TypeEffect.NARROW_BODY;
         this.isMoving = false;
     }
     

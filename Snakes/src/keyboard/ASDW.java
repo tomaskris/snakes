@@ -5,8 +5,12 @@
  */
 package keyboard;
 
+import actions.KeyDown;
+import actions.KeyLeft;
+import actions.KeyRight;
+import actions.KeyUp;
 import java.awt.event.KeyEvent;
-import manager.Manager;
+import manager.SnakeManager;
 
 /**
  *
@@ -15,19 +19,19 @@ import manager.Manager;
 public class ASDW implements IKeyboard {
 
     @Override
-    public boolean isKeyPressed(int key, Manager manager) {
+    public boolean isKeyPressed(int key, SnakeManager manager) {
         switch (key) {
             case KeyEvent.VK_W:
-                manager.moveUp();
+                new KeyUp(manager).execute();
                 return true;
             case KeyEvent.VK_S:
-                manager.moveDown();
+                new KeyDown(manager).execute();
                 return true;
             case KeyEvent.VK_A:
-                manager.turnLeft();
+                new KeyLeft(manager).execute();
                 return true;
             case KeyEvent.VK_D:
-                manager.turnRight();
+                new KeyRight(manager).execute();
                 return true;
             default: return false;
         }

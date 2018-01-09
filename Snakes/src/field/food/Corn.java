@@ -19,7 +19,7 @@ public class Corn extends Food {
         this.icon = new ImageIcon(getClass().getResource(IMAGE_CORN));
         
         this.score = 5;
-        this.typeEffect = TypeEffect.NOTHING;
+        this.typeEffect = TypeEffect.NARROW_BODY;
         this.isMoving = false;
     }
     

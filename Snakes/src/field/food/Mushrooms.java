@@ -19,7 +19,7 @@ public class Mushrooms extends Food {
         this.icon = new ImageIcon(getClass().getResource(IMAGE_MUSHROOMS));
         
         this.score = 10;
-        this.typeEffect = TypeEffect.NOTHING;
+        this.typeEffect = TypeEffect.EXPAND_BODY;
         this.isMoving = false;
     }
     
