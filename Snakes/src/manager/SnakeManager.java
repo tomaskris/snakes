@@ -7,7 +7,6 @@ import field.Field;
 import field.snake.Snake;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import player.Player;
 import states.FieldDown;
 import states.FieldLeft;
 import states.FieldRight;
@@ -19,26 +18,14 @@ import states.FieldUp;
  */
 public class SnakeManager extends Manager {
 
-//    private Player player;
     private boolean isStarted;
     private boolean isLive;
     private TypeSpeed speed; //suvisi s rychlostou hada
     private Thread thread;
     private TypeSnake typeSnake; //typ hada
 
-//    public SnakeManager(Graphics2D graphic, Player player) {
-//        super(graphic);
-//        this.player = player;
-//        this.isStarted = false;
-//        this.isLive = true;
-//        this.drawField = new ArrayList<>();
-//        drawField.add(getGenerator().getSnake());
-//        this.speed = NORMAL;
-//    }
-
     public SnakeManager(Graphics2D graphic, TypeSnake typeSnake) {
         super(graphic);
-//        this.player = player;
         this.isStarted = false;
         this.isLive = true;
         this.drawField = new ArrayList<>();
@@ -136,10 +123,6 @@ public class SnakeManager extends Manager {
         }
     }
 
-//    public void addScoreToPlayer(int score) {
-//        player.increaseScore(score);
-//    }
-
     public void fastSpeed() {
         this.speed = FAST;
         checkThredAndSetNormalSpeed();
@@ -175,18 +158,6 @@ public class SnakeManager extends Manager {
     public TypeSpeed getSpeed() {
         return speed;
     }
-
-//    public IKeyboard getKeyboard() {
-//        return player.getKeyboard();
-//    }
-//
-//    public int getPlayerScore() {
-//        return player.getScore();
-//    }
-//
-//    public String getPlayerName() {
-//        return player.getName();
-//    }
 
     public boolean isLive() {
         return isLive;

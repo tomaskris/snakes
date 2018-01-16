@@ -1,9 +1,5 @@
 package game_logic;
 
-import actions.ExpandBody;
-import actions.NarrowBody;
-import actions.SpeedDown;
-import actions.SpeedUp;
 import static constants.Constants.MAX_HEIGHT_GAME_BOARD;
 import static constants.Constants.MAX_WIDTH_GAME_BOARD;
 import java.awt.Color;
@@ -13,7 +9,6 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import collisions.Collisions;
-import enums.TypeSnake;
 import field.food.Food;
 import java.awt.Font;
 import keyboard.Keyboard;
@@ -123,16 +118,16 @@ public class Game extends GameEngine {
         player.increaseScore(eatenFood.getScore());
         switch (eatenFood.getTypeEffect()) {
             case EXPAND_BODY:
-                new ExpandBody(snake).execute();
+                snake.expandBody();
                 break;
             case NARROW_BODY:
-                new NarrowBody(snake).execute();
+                snake.narrowBody();
                 break;
             case SPEED_UP:
-                new SpeedUp(snake).execute();
+                snake.fastSpeed();
                 break;
             case SPEED_DOWN:
-                new SpeedDown(snake).execute();
+                snake.slowSpeed();
                 break;
             default:
                 break;

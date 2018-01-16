@@ -1,6 +1,5 @@
 package player;
 
-import enums.TypeSnake;
 import keyboard.Keyboard;
 import manager.SnakeManager;
 
@@ -14,13 +13,6 @@ public class Player {
     private int score; //ziskane skore hraca
     private Keyboard keyboard; //typ tlacitok na klavesnici, na ktorych hra
     private SnakeManager snakeManager;
-
-//    public Player(String name, TypeSnake typeSnake, IKeyboard keyboard) {
-//        this.name = name;
-//        this.score = 0;
-//        this.typeSnake = typeSnake;
-//        this.keyboard = keyboard;
-//    }
     
     public Player(String name, Keyboard keyboard, SnakeManager snakeManager) {
         this.name = name;
@@ -49,6 +41,4 @@ public class Player {
         return snakeManager;
     }
     
-    
-
 }

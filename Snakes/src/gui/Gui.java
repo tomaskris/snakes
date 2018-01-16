@@ -28,37 +28,36 @@ public class Gui extends javax.swing.JFrame {
 
         fillColorPickers();
     }
-    
-    private void registerPlayerKeyboard(Keyboard keyboard){
-        jplGameBoard.addKeyListener(keyboard.getDown());
-        jplGameBoard.addKeyListener(keyboard.getUp());
-        jplGameBoard.addKeyListener(keyboard.getLeft());
-        jplGameBoard.addKeyListener(keyboard.getRight());
-    }
 
     public void startGame() {
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.show(cards, "game_board");
         jplGameBoard.requestFocus(); //toto je dolezite
         game = new Game(getBufferStrategy());
-
+        //vytvorenie prveho hraca
         SnakeManager s1 = new SnakeManager((Graphics2D) getBufferStrategy().getDrawGraphics(), TypeSnakeFromColorPicker(player1ColorPicker));
         Keyboard k1 = new Keyboard(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, s1);
         registerPlayerKeyboard(k1);
         game.addPlayer(player1Name.getText(), k1, s1);
-        
+        //vytvorenie druheho hraca
         SnakeManager s2 = new SnakeManager((Graphics2D) getBufferStrategy().getDrawGraphics(), TypeSnakeFromColorPicker(player2ColorPicker));
         Keyboard k2 = new Keyboard(KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, s2);
         registerPlayerKeyboard(k2);
         game.addPlayer(player2Name.getText(), k2, s2);
-//        game.addPlayer(new Player(player1Name.getText(), TypeSnakeFromColorPicker(player1ColorPicker), new Arrows()));
-//        game.addPlayer(new Player(player2Name.getText(), TypeSnakeFromColorPicker(player2ColorPicker), new WASD()));
+
         game.createNewGame();
     }
 
     private void backToStartPanel() {
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.show(cards, "start_panel");
+    }
+    
+    private void registerPlayerKeyboard(Keyboard keyboard){
+        jplGameBoard.addKeyListener(keyboard.getDown());
+        jplGameBoard.addKeyListener(keyboard.getUp());
+        jplGameBoard.addKeyListener(keyboard.getLeft());
+        jplGameBoard.addKeyListener(keyboard.getRight());
     }
 
     private void changePlayerColorPickerBgColor(JComboBox colorPicker) {
@@ -222,21 +221,10 @@ public class Gui extends javax.swing.JFrame {
 
     private void jplGameBoardKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jplGameBoardKeyPressed
         System.out.println("Key pressed");
-        int key = evt.getKeyCode();
-        SnakeManager player;
         if (!game.isInGame()) {
             backToStartPanel();
-
             return;
         }
-
-//        for (Manager manager : game.getPlayers()) {
-//            player = (SnakeManager) manager;
-//            if (player.getKeyboard().isKeyPressed(key, player)) {
-//                break;
-//            }
-//        }
-
     }//GEN-LAST:event_jplGameBoardKeyPressed
 
     private void jbtStartGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtStartGameActionPerformed

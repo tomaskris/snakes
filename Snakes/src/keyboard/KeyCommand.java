@@ -5,7 +5,6 @@
  */
 package keyboard;
 
-import actions.ASnakeAction;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import manager.SnakeManager;
