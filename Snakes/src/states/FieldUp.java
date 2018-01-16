@@ -2,7 +2,6 @@ package states;
 
 import static constants.Constants.SIZE_IN_PIXEL;
 import enums.TypeDirection;
-import field.Field;
 import field.Position;
 
 /**
@@ -11,19 +10,19 @@ import field.Position;
  */
 public class FieldUp extends FieldState {
 
-    public FieldUp(Field field) {
-        super(field);
+    public FieldUp(Position position) {
+        super(position);
         this.direction = TypeDirection.UP;
     }
 
     @Override
     public IFieldState turnLeft() {
-        return new FieldLeft(field);
+        return new FieldLeft(position);
     }
 
     @Override
     public IFieldState turnRight() {
-        return new FieldRight(field);
+        return new FieldRight(position);
     }
 
     @Override

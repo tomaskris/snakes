@@ -8,6 +8,7 @@ package field.food;
 import static constants.Constants.IMAGE_PINEAPPLE;
 import enums.TypeEffect;
 import javax.swing.ImageIcon;
+import states.IFieldState;
 
 /**
  *
@@ -15,7 +16,7 @@ import javax.swing.ImageIcon;
  */
 public class Pineapple extends Food {
 
-    public Pineapple() {
+    public Pineapple(){
         this.icon = new ImageIcon(getClass().getResource(IMAGE_PINEAPPLE));
         
         this.score = 13;

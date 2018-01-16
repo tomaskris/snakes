@@ -1,4 +1,4 @@
-package actions;
+package keyboard;
 
 import enums.TypeDirection;
 import manager.SnakeManager;
@@ -7,10 +7,10 @@ import manager.SnakeManager;
  *
  * @author Tomáš
  */
-public class KeyRight extends ASnakeAction {
+public class KeyRight extends KeyCommand {
 
-    public KeyRight(SnakeManager snake) {
-        super(snake);
+    public KeyRight(SnakeManager manager, int key) {
+        super(manager, key);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package manager;
 
+import field.Field;
 import generator.Generator;
 import java.awt.Graphics2D;
 import java.util.List;
-import states.IFieldState;
 
 /**
  *
@@ -13,7 +13,7 @@ public abstract class Manager {
 
     private Graphics2D graphics;
     private final Generator generator;
-    protected List<IFieldState> drawField;
+    protected List<Field> drawField;
 
     public Manager(Graphics2D graphics) {
         this.graphics = graphics;
@@ -32,7 +32,7 @@ public abstract class Manager {
         return generator;
     }
 
-    public List<IFieldState> getDrawField() {
+    public List<Field> getDrawField() {
         return drawField;
     }
 

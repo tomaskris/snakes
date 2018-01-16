@@ -8,6 +8,7 @@ package field.food;
 import static constants.Constants.IMAGE_MELON;
 import enums.TypeEffect;
 import javax.swing.ImageIcon;
+import states.IFieldState;
 
 /**
  *
@@ -15,7 +16,7 @@ import javax.swing.ImageIcon;
  */
 public class Melon extends Food {
 
-    public Melon() {
+    public Melon(){
         this.icon = new ImageIcon(getClass().getResource(IMAGE_MELON));
         
         this.score = 17;

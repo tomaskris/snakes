@@ -2,6 +2,7 @@ package field.obstacle;
 
 import enums.TypeField;
 import field.Field;
+import states.IFieldState;
 
 /**
  *
@@ -9,7 +10,8 @@ import field.Field;
  */
 public abstract class Obstacle extends Field {
 
-    public Obstacle() {
+    public Obstacle(IFieldState state) {
+        super(state);
         this.typeField = TypeField.OBSTACLE;
     }
 

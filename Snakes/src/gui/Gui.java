@@ -3,17 +3,15 @@ package gui;
 import static constants.Constants.MAX_HEIGHT_WINDOW;
 import static constants.Constants.MAX_WIDTH_WINDOW;
 import enums.TypeSnake;
-import field.Field;
 import game_logic.Game;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import javax.swing.JComboBox;
-import keyboard.WASD;
-import keyboard.Arrows;
-import manager.Manager;
+import keyboard.Keyboard;
 import manager.SnakeManager;
-import player.Player;
 
 /**
  *
@@ -30,6 +28,13 @@ public class Gui extends javax.swing.JFrame {
 
         fillColorPickers();
     }
+    
+    private void registerPlayerKeyboard(Keyboard keyboard){
+        jplGameBoard.addKeyListener(keyboard.getDown());
+        jplGameBoard.addKeyListener(keyboard.getUp());
+        jplGameBoard.addKeyListener(keyboard.getLeft());
+        jplGameBoard.addKeyListener(keyboard.getRight());
+    }
 
     public void startGame() {
         CardLayout cl = (CardLayout) (cards.getLayout());
@@ -37,8 +42,17 @@ public class Gui extends javax.swing.JFrame {
         jplGameBoard.requestFocus(); //toto je dolezite
         game = new Game(getBufferStrategy());
 
-        game.addPlayer(new Player(player1Name.getText(), TypeSnakeFromColorPicker(player1ColorPicker), new Arrows()));
-        game.addPlayer(new Player(player2Name.getText(), TypeSnakeFromColorPicker(player2ColorPicker), new WASD()));
+        SnakeManager s1 = new SnakeManager((Graphics2D) getBufferStrategy().getDrawGraphics(), TypeSnakeFromColorPicker(player1ColorPicker));
+        Keyboard k1 = new Keyboard(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, s1);
+        registerPlayerKeyboard(k1);
+        game.addPlayer(player1Name.getText(), k1, s1);
+        
+        SnakeManager s2 = new SnakeManager((Graphics2D) getBufferStrategy().getDrawGraphics(), TypeSnakeFromColorPicker(player2ColorPicker));
+        Keyboard k2 = new Keyboard(KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, s2);
+        registerPlayerKeyboard(k2);
+        game.addPlayer(player2Name.getText(), k2, s2);
+//        game.addPlayer(new Player(player1Name.getText(), TypeSnakeFromColorPicker(player1ColorPicker), new Arrows()));
+//        game.addPlayer(new Player(player2Name.getText(), TypeSnakeFromColorPicker(player2ColorPicker), new WASD()));
         game.createNewGame();
     }
 
@@ -107,7 +121,7 @@ public class Gui extends javax.swing.JFrame {
 
         jLabel1.setText("Player1 (arrows)");
 
-        player1Name.setText("Tomas1");
+        player1Name.setText("Pat");
 
         player1ColorPicker.setActionCommand("player1ColorPickerChanged");
         player1ColorPicker.addActionListener(new java.awt.event.ActionListener() {
@@ -125,7 +139,7 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        player2Name.setText("Tomas2");
+        player2Name.setText("Mat");
 
         javax.swing.GroupLayout jplStartPanelLayout = new javax.swing.GroupLayout(jplStartPanel);
         jplStartPanel.setLayout(jplStartPanelLayout);
@@ -216,12 +230,12 @@ public class Gui extends javax.swing.JFrame {
             return;
         }
 
-        for (Manager manager : game.getPlayers()) {
-            player = (SnakeManager) manager;
-            if (player.getKeyboard().isKeyPressed(key, player)) {
-                break;
-            }
-        }
+//        for (Manager manager : game.getPlayers()) {
+//            player = (SnakeManager) manager;
+//            if (player.getKeyboard().isKeyPressed(key, player)) {
+//                break;
+//            }
+//        }
 
     }//GEN-LAST:event_jplGameBoardKeyPressed
 

@@ -57,37 +57,30 @@ public class Generator {
      * @param list
      * @return
      */
-    public IFieldState getRandFood(List<Field> list) {
+    public Field getRandFood(List<Field> list) {
         Food food = ((Food) list.get(randEat.nextInt(list.size()))).copy();
         food.changePosition(getRandCoordinate());
-        return getRandStateFood(food);
+        return food;
     }
 
-    public IFieldState getRandFood(Field food) {
-        return getRandStateFood(food);
+    public IFieldState getRandStateFood() {
+        return getRandState(randStateFood);
     }
 
-    private IFieldState getRandStateFood(Field field) {
-        return getRandState(randStateFood, field);
+    public Field getSnake() {
+        return new Snake(getRandState(randStateSnake));
     }
 
-    public IFieldState getRandSnake() {
-        Snake head = new Snake();
-        head.changePosition(new Position(100, 100));
-        head.changePosition(getRandCoordinate());
-        return getRandState(randStateSnake, head);
-    }
-
-    private IFieldState getRandState(Random randStateFood, Field field) {
+    private IFieldState getRandState(Random randStateFood) {
         switch (randStateFood.nextInt(4)) {
             case 0:
-                return new FieldDown(field);
+                return new FieldDown(getRandCoordinate());
             case 1:
-                return new FieldUp(field);
+                return new FieldUp(getRandCoordinate());
             case 2:
-                return new FieldLeft(field);
+                return new FieldLeft(getRandCoordinate());
             case 3:
-                return new FieldRight(field);
+                return new FieldRight(getRandCoordinate());
             default:
                 return null;
         }

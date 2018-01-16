@@ -13,8 +13,10 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import collisions.Collisions;
+import enums.TypeSnake;
 import field.food.Food;
 import java.awt.Font;
+import keyboard.Keyboard;
 import manager.FoodManager;
 import manager.Manager;
 import manager.SnakeManager;
@@ -32,7 +34,7 @@ public class Game extends GameEngine {
     private boolean inGame;
 
     private Manager foodManager;
-    private List<Manager> players;
+    private List<Player> players;
     private int deadPlayers;
 
     public Game(BufferStrategy bs) {
@@ -43,7 +45,11 @@ public class Game extends GameEngine {
     }
 
     public boolean addPlayer(Player player) {
-        return players.add(new SnakeManager(getGraphics(), player));
+        return players.add(player);
+    }
+    
+    public boolean addPlayer(String name, Keyboard keyboard, SnakeManager snake) {
+        return players.add(new Player(name, keyboard, snake));
     }
 
     private Graphics2D getGraphics() {
@@ -62,10 +68,10 @@ public class Game extends GameEngine {
 
     @Override
     public void update() {
-        SnakeManager player;
-        for (Manager manager : players) {
-            player = (SnakeManager) manager;
-            if (updateTick % player.getSpeed().getValue() == 0) {
+        SnakeManager snake;
+        for (Player player : players) {
+            snake = (SnakeManager) player.getSnakeManager();
+            if (updateTick % snake.getSpeed().getValue() == 0) {
                 updateLogic(player);
             }
         }
@@ -77,8 +83,8 @@ public class Game extends GameEngine {
         g2.setColor(Color.BLACK);
         g2.fillRect(10, 30, MAX_WIDTH_GAME_BOARD + 10, MAX_HEIGHT_GAME_BOARD + 10);
 
-        for (Manager player : players) {
-            player.draw();
+        for (Player player : players) {
+            player.getSnakeManager().draw();
         }
         foodManager.draw();
         g2.dispose();
@@ -91,41 +97,42 @@ public class Game extends GameEngine {
         gameOver();
     }
 
-    private void updateLogic(SnakeManager player) {
-        if (!player.isLive()) {
+    private void updateLogic(Player player) {
+        SnakeManager snake = player.getSnakeManager();
+        if (!player.getSnakeManager().isLive()) {
             return;
         }
 
         // ak narazil, kill him
-        if (Collisions.checkCollision(player.getDrawField())) {
-            killPlayer(player);
+        if (Collisions.checkCollision(snake.getDrawField())) {
+            killPlayer(snake);
             return;
         }
 
-        Food eatenFood = Collisions.checkEatenFood(player.getDrawField(), foodManager.getDrawField());
+        Food eatenFood = Collisions.checkEatenFood(snake.getDrawField(), foodManager.getDrawField());
         // ak nezjedol jedlo, over kolizie s ostatnymi hracmi
         if (eatenFood == null) {
-            player.move();
-            if (Collisions.checkSnakesCollision(player, players)) {
-                killPlayer(player);
+            snake.move();
+            if (Collisions.checkSnakesCollision(snake, players)) {
+                killPlayer(snake);
             }
 
             return;
         }
 
-        player.addScoreToPlayer(eatenFood.getScore());
+        player.increaseScore(eatenFood.getScore());
         switch (eatenFood.getTypeEffect()) {
             case EXPAND_BODY:
-                new ExpandBody(player).execute();
+                new ExpandBody(snake).execute();
                 break;
             case NARROW_BODY:
-                new NarrowBody(player).execute();
+                new NarrowBody(snake).execute();
                 break;
             case SPEED_UP:
-                new SpeedUp(player).execute();
+                new SpeedUp(snake).execute();
                 break;
             case SPEED_DOWN:
-                new SpeedDown(player).execute();
+                new SpeedDown(snake).execute();
                 break;
             default:
                 break;
@@ -134,11 +141,11 @@ public class Game extends GameEngine {
     }
 
     private void sortPlayers() {
-        players.sort((Manager z1, Manager z2) -> {
-            if (((SnakeManager) z1).getPlayerScore() < ((SnakeManager) z2).getPlayerScore()) {
+        players.sort((Player z1, Player z2) -> {
+            if (z1.getScore() < z2.getScore()) {
                 return 1;
             }
-            if (((SnakeManager) z1).getPlayerScore() > ((SnakeManager) z2).getPlayerScore()) {
+            if (z1.getScore() > z2.getScore()) {
                 return -1;
             }
             return 0;
@@ -165,8 +172,8 @@ public class Game extends GameEngine {
         g2.drawString(message, (MAX_WIDTH_GAME_BOARD / 2) - 30, 100);
         int pom = 130;
         sortPlayers();
-        for (Manager player : players) {
-            message = ((SnakeManager) player).getPlayerName() + " >> " + ((SnakeManager) player).getPlayerScore() + " points";
+        for (Player player : players) {
+            message = player.getName() + " >> " + player.getScore() + " points";
             g2.drawString(message, (MAX_WIDTH_GAME_BOARD / 2) - 100, pom);
             pom += 25;
         }
@@ -184,7 +191,7 @@ public class Game extends GameEngine {
         deadPlayers++;
     }
 
-    public List<Manager> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 

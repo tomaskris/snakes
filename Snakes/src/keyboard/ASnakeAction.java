@@ -1,4 +1,4 @@
-package actions;
+package keyboard;
 
 import manager.SnakeManager;
 

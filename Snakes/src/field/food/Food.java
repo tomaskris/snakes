@@ -8,6 +8,7 @@ package field.food;
 import enums.TypeEffect;
 import enums.TypeField;
 import field.Field;
+import states.IFieldState;
 
 /**
  *
@@ -19,7 +20,7 @@ public abstract class Food extends Field {
     protected TypeEffect typeEffect; //typ efektu, co sa stane hadovi, ked zje toto jedlo
     protected boolean isMoving; //ci sa toto jedlo aj pohybuje po hracej ploche
     
-    public Food() {
+    public Food(){
         this.typeField = TypeField.EAT;
     }
 

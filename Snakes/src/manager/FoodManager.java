@@ -6,7 +6,6 @@ import java.util.List;
 import static constants.Constants.NUMBER_OF_FOODS;
 import field.Field;
 import field.food.*;
-import states.IFieldState;
 
 /**
  *
@@ -28,7 +27,7 @@ public class FoodManager extends Manager {
         foods.add(food);
     }
 
-    private IFieldState randomFood() {
+    private Field randomFood() {
         return getGenerator().getRandFood(foods);
     }
 
@@ -51,7 +50,7 @@ public class FoodManager extends Manager {
 
     @Override
     public void draw() {
-        for (IFieldState drawFood : drawField) {
+        for (Field drawFood : drawField) {
             if (drawFood == null) {
                 drawField.set(drawField.indexOf(drawFood), randomFood());
             } else {

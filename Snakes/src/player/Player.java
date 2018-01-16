@@ -1,7 +1,8 @@
 package player;
 
 import enums.TypeSnake;
-import keyboard.IKeyboard;
+import keyboard.Keyboard;
+import manager.SnakeManager;
 
 /**
  *
@@ -11,14 +12,21 @@ public class Player {
 
     private String name; //meno hraca
     private int score; //ziskane skore hraca
-    private TypeSnake typeSnake; //typ hada
-    private IKeyboard keyboard; //typ tlacitok na klavesnici, na ktorych hra
+    private Keyboard keyboard; //typ tlacitok na klavesnici, na ktorych hra
+    private SnakeManager snakeManager;
 
-    public Player(String name, TypeSnake typeSnake, IKeyboard keyboard) {
+//    public Player(String name, TypeSnake typeSnake, IKeyboard keyboard) {
+//        this.name = name;
+//        this.score = 0;
+//        this.typeSnake = typeSnake;
+//        this.keyboard = keyboard;
+//    }
+    
+    public Player(String name, Keyboard keyboard, SnakeManager snakeManager) {
         this.name = name;
         this.score = 0;
-        this.typeSnake = typeSnake;
         this.keyboard = keyboard;
+        this.snakeManager = snakeManager;
     }
 
     public void increaseScore(int points) {
@@ -29,16 +37,18 @@ public class Player {
         return score;
     }
 
-    public IKeyboard getKeyboard() {
+    public Keyboard getKeyboard() {
         return keyboard;
-    }
-
-    public TypeSnake getTypeSnake() {
-        return typeSnake;
     }
 
     public String getName() {
         return name;
     }
+
+    public SnakeManager getSnakeManager() {
+        return snakeManager;
+    }
+    
+    
 
 }

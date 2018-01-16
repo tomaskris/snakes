@@ -1,5 +1,6 @@
 package manager;
 
+import enums.TypeSnake;
 import enums.TypeSpeed;
 import static enums.TypeSpeed.*;
 import field.Field;
@@ -7,8 +8,6 @@ import field.snake.Snake;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import player.Player;
-import states.IFieldState;
-import keyboard.IKeyboard;
 import states.FieldDown;
 import states.FieldLeft;
 import states.FieldRight;
@@ -20,22 +19,34 @@ import states.FieldUp;
  */
 public class SnakeManager extends Manager {
 
-    private Player player;
+//    private Player player;
     private boolean isStarted;
     private boolean isLive;
     private TypeSpeed speed; //suvisi s rychlostou hada
     private Thread thread;
+    private TypeSnake typeSnake; //typ hada
 
-    public SnakeManager(Graphics2D graphic, Player player) {
+//    public SnakeManager(Graphics2D graphic, Player player) {
+//        super(graphic);
+//        this.player = player;
+//        this.isStarted = false;
+//        this.isLive = true;
+//        this.drawField = new ArrayList<>();
+//        drawField.add(getGenerator().getSnake());
+//        this.speed = NORMAL;
+//    }
+
+    public SnakeManager(Graphics2D graphic, TypeSnake typeSnake) {
         super(graphic);
-        this.player = player;
+//        this.player = player;
         this.isStarted = false;
         this.isLive = true;
         this.drawField = new ArrayList<>();
-        drawField.add(getGenerator().getRandSnake());
+        drawField.add(getGenerator().getSnake());
         this.speed = NORMAL;
+        this.typeSnake = typeSnake;
     }
-
+    
     @Override
     public void draw() {
         if (!isLive) {
@@ -43,16 +54,16 @@ public class SnakeManager extends Manager {
         }
 
         String path;
-        IFieldState snake = null;
+        Field snake = null;
         for (int i = 0; i < drawField.size(); i++) {
             snake = drawField.get(i);
             if (i == 0) {
-                path = "/images/snakes/" + player.getTypeSnake().getName() + "/head"
+                path = "/images/snakes/" + typeSnake.getName() + "/head"
                         + snake.getDirection().name() + ".png";
             } else {
-                path = "/images/snakes/" + player.getTypeSnake().getName() + "/body.png";
+                path = "/images/snakes/" + typeSnake.getName() + "/body.png";
             }
-            snake.getField().changeImagePath(path);
+            snake.changeImagePath(path);
             snake.draw(getGraphics());
         }
 
@@ -64,7 +75,7 @@ public class SnakeManager extends Manager {
             return;
         }
 
-        IFieldState partBody = null;
+        Field partBody = null;
         for (int i = drawField.size() - 1; i > 0; i--) {
             partBody = drawField.get(i);
             partBody.move();
@@ -73,7 +84,7 @@ public class SnakeManager extends Manager {
         drawField.get(0).move();
     }
 
-    private IFieldState getHead() {
+    private Field getHead() {
         return drawField.get(0);
     }
 
@@ -93,43 +104,41 @@ public class SnakeManager extends Manager {
         }
     }
 
-    private IFieldState createPartBody() {
-        Field partField = new Snake();
-        partField.changePosition(getHead().getPosition());
+    private Field createPartBody() {
         switch (getHead().getDirection()) {
             case DOWN:
-                return new FieldDown(partField);
+                return new Snake(new FieldDown(getHead().getPosition()));
             case UP:
-                return new FieldUp(partField);
+                return new Snake(new FieldUp(getHead().getPosition()));
             case LEFT:
-                return new FieldLeft(partField);
+                return new Snake(new FieldLeft(getHead().getPosition()));
             case RIGHT:
-                return new FieldRight(partField);
+                return new Snake(new FieldRight(getHead().getPosition()));
             default:
                 return null;
         }
     }
 
-    private void changeState(int indexCurBody, IFieldState followBody) {
+    private void changeState(int indexCurBody, Field followBody) {
         switch (followBody.getDirection()) {
             case DOWN:
-                drawField.set(indexCurBody, drawField.get(indexCurBody).moveDown());
+                drawField.get(indexCurBody).moveDown();
                 break;
             case UP:
-                drawField.set(indexCurBody, drawField.get(indexCurBody).moveUp());
+                drawField.get(indexCurBody).moveUp();
                 break;
             case LEFT:
-                drawField.set(indexCurBody, drawField.get(indexCurBody).turnLeft());
+                drawField.get(indexCurBody).turnLeft();
                 break;
             case RIGHT:
-                drawField.set(indexCurBody, drawField.get(indexCurBody).turnRight());
+                drawField.get(indexCurBody).turnRight();
                 break;
         }
     }
 
-    public void addScoreToPlayer(int score) {
-        player.increaseScore(score);
-    }
+//    public void addScoreToPlayer(int score) {
+//        player.increaseScore(score);
+//    }
 
     public void fastSpeed() {
         this.speed = FAST;
@@ -167,17 +176,17 @@ public class SnakeManager extends Manager {
         return speed;
     }
 
-    public IKeyboard getKeyboard() {
-        return player.getKeyboard();
-    }
-
-    public int getPlayerScore() {
-        return player.getScore();
-    }
-
-    public String getPlayerName() {
-        return player.getName();
-    }
+//    public IKeyboard getKeyboard() {
+//        return player.getKeyboard();
+//    }
+//
+//    public int getPlayerScore() {
+//        return player.getScore();
+//    }
+//
+//    public String getPlayerName() {
+//        return player.getName();
+//    }
 
     public boolean isLive() {
         return isLive;
@@ -190,25 +199,25 @@ public class SnakeManager extends Manager {
     @Override
     public void moveUp() {
         isStarted = true;
-        drawField.set(0, drawField.get(0).moveUp());
+        drawField.get(0).moveUp();
     }
 
     @Override
     public void moveDown() {
         isStarted = true;
-        drawField.set(0, drawField.get(0).moveDown());
+        drawField.get(0).moveDown();
     }
 
     @Override
     public void turnLeft() {
         isStarted = true;
-        drawField.set(0, drawField.get(0).turnLeft());
+        drawField.get(0).turnLeft();
     }
 
     @Override
     public void turnRight() {
         isStarted = true;
-        drawField.set(0, drawField.get(0).turnRight());
+        drawField.get(0).turnRight();
     }
 
 }

@@ -1,9 +1,7 @@
 package states;
 
 import enums.TypeDirection;
-import field.Field;
 import field.Position;
-import java.awt.Graphics2D;
 
 /**
  *
@@ -11,16 +9,11 @@ import java.awt.Graphics2D;
  */
 abstract class FieldState implements IFieldState {
 
-    protected Field field;
+    protected Position position;
     protected TypeDirection direction;
 
-    public FieldState(Field field) {
-        this.field = field;
-    }
-
-    @Override
-    public void draw(Graphics2D g2) {
-        field.draw(g2);
+    public FieldState(Position position) {
+        this.position = position;
     }
 
     @Override
@@ -30,16 +23,12 @@ abstract class FieldState implements IFieldState {
 
     @Override
     public Position getPosition() {
-        return field.getPosition();
-    }
-
-    public void setPosition(Position position) {
-        this.field.changePosition(position);
+        return position;
     }
 
     @Override
-    public Field getField() {
-        return field;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     @Override
